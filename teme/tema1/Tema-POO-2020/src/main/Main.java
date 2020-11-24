@@ -1,8 +1,10 @@
 package main;
 
+import action.ActionStarter;
 import checker.Checkstyle;
 import checker.Checker;
 import common.Constants;
+import fileio.ActionInputData;
 import fileio.Input;
 import fileio.InputLoader;
 import fileio.Writer;
@@ -13,6 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -71,6 +75,8 @@ public final class Main {
         JSONArray arrayResult = new JSONArray();
 
         //TODO add here the entry point to your implementation
+        ActionStarter init = new ActionStarter(input, fileWriter, arrayResult);
+
 
         fileWriter.closeJSON(arrayResult);
     }

@@ -48,4 +48,27 @@ public abstract class ShowInput {
     public final ArrayList<String> getGenres() {
         return genres;
     }
+
+    /**
+     * Added, not in the original
+     */
+    public double getRating() {
+        return 0;
+    }
+    public int getFavCnt() {
+        return 0;
+    }
+    public void setFavCnt(int cnt) {
+
+    }
+    private int viewCnt = 0;
+    public int getViewCnt() {
+        return viewCnt;
+    }
+    public void setViewCnt(int cnt) {
+        viewCnt = cnt;
+    }
+    /**
+     * End of added bits
+     */
 }

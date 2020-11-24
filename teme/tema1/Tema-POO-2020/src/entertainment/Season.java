@@ -22,6 +22,24 @@ public final class Season {
      */
     private List<Double> ratings;
 
+    /**
+     * not in the original skel
+     * additions start here
+     */
+    public double sumOfRatings = 0;
+    public int numberOfRatings = 0;
+    public double getRating() {
+        if (numberOfRatings == 0) {
+            return 0;
+        } else {
+            return sumOfRatings / numberOfRatings;
+        }
+    }
+    /**
+     * not in the original skel
+     * additions end here
+     */
+
     public Season(final int currentSeason, final int duration) {
         this.currentSeason = currentSeason;
         this.duration = duration;
