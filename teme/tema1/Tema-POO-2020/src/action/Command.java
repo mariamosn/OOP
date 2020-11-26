@@ -7,7 +7,6 @@ import files.Movie;
 import files.Serial;
 import files.User;
 import org.json.simple.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class Command {
     protected Command(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
-        this.user = getRightUser();
+        this.user = User.getRightUser(dataBase, action.getUsername());
         commandSolver();
     }
     private void commandSolver() {
@@ -34,32 +33,14 @@ public class Command {
         }
     }
 
-    private User getRightUser() {
-        List<User> users = dataBase.getUsers();
-        User user = null;
-
-        // search the right user in the database
-        for (User tempUsr
-                : users) {
-            if (tempUsr.getUsername().equals(action.getUsername())) {
-                user = tempUsr;
-                break;
-            }
-        }
-        if (user == null) {
-            System.out.println("Invalid user!");
-        }
-        return user;
-    }
-
     private int commandFavorite() {
-        // check if the movie is seen
-        if (!user.history.containsKey(action.getTitle())
-                || user.history.get(action.getTitle()) == 0) {
+        // check if the movie has been seen
+        if (!user.getHistory().containsKey(action.getTitle())
+                || user.getHistory().get(action.getTitle()) == 0) {
             try {
-                JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+                JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                         "error -> " + action.getTitle() + " is not seen");
-                dataBase.arrayResult.add(out);
+                dataBase.getArrayResult().add(out);
                 return -1;
             } catch (IOException e) {
                 System.out.println("IOException");
@@ -69,12 +50,12 @@ public class Command {
 
         // check if the movie isn't already a favorite
         for (String movie
-                : user.favoriteMovies) {
+                : user.getFavoriteMovies()) {
             if (movie.equals(action.getTitle())) {
                 try {
-                    JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+                    JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                             "error -> " + action.getTitle() + " is already in favourite list");
-                    dataBase.arrayResult.add(out);
+                    dataBase.getArrayResult().add(out);
                     return -1;
                 } catch (IOException e) {
                     System.out.println("IOException");
@@ -84,12 +65,12 @@ public class Command {
         }
 
         // add to favorite
-        user.favoriteMovies.add(action.getTitle());
+        user.getFavoriteMovies().add(action.getTitle());
 
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "success -> " + action.getTitle() + " was added as favourite");
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
             return -1;
@@ -99,16 +80,16 @@ public class Command {
 
     private int commandView() {
         int cnt;
-        if (user.history.containsKey(action.getTitle())) {
-            cnt = user.history.get(action.getTitle()) + 1;
+        if (user.getHistory().containsKey(action.getTitle())) {
+            cnt = user.getHistory().get(action.getTitle()) + 1;
         } else {
             cnt = 1;
         }
-        user.history.put(action.getTitle(), cnt);
+        user.getHistory().put(action.getTitle(), cnt);
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "success -> " + action.getTitle() + " was viewed with total views of " + cnt);
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
             return -1;
@@ -117,14 +98,13 @@ public class Command {
     }
 
     private int commandRating() {
-        User user = getRightUser();
         // check if the video is seen
-        if (!user.history.containsKey(action.getTitle())
-                || user.history.get(action.getTitle()) == 0) {
+        if (!user.getHistory().containsKey(action.getTitle())
+                || user.getHistory().get(action.getTitle()) == 0) {
             try {
-                JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+                JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                         "error -> " + action.getTitle() + " is not seen");
-                dataBase.arrayResult.add(out);
+                dataBase.getArrayResult().add(out);
                 return -1;
             } catch (IOException e) {
                 System.out.println("IOException");
@@ -133,16 +113,16 @@ public class Command {
         }
 
         // check if the user didn't already rate the video
-        if (user.rated != null && user.rated.size() > 0) {
+        if (user.getRated() != null && user.getRated().size() > 0) {
             for (String title
-                    : user.rated) {
+                    : user.getRated()) {
                 StringBuilder str = new StringBuilder(action.getTitle());
                 str.append(action.getSeasonNumber());
                 if (title.equals(str.toString())) {
                     try {
-                        JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
-                                "error -> " + action.getTitle() + " has been already rated");
-                        dataBase.arrayResult.add(out);
+                        JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(),
+                                "", "error -> " + action.getTitle() + " has been already rated");
+                        dataBase.getArrayResult().add(out);
                     } catch (IOException e) {
                         System.out.println("IOException");
                         return -1;
@@ -158,7 +138,7 @@ public class Command {
             // get the right movie from the database
             Movie crt = null;
             for (Movie movie
-                    : dataBase.moviesData) {
+                    : dataBase.getMovies()) {
                 if (movie.getTitle().equals(action.getTitle())) {
                     crt = movie;
                     break;
@@ -169,15 +149,15 @@ public class Command {
                 return -1;
             }
 
-            crt.sumOfRatings += action.getGrade();
-            crt.numberOfRatings++;
+            crt.setSumOfRatings(crt.getSumOfRatings() + action.getGrade());
+            crt.setNumberOfRatings(crt.getNumberOfRatings() + 1);
 
         // rating for season
         } else {
             // get the right serial from the database
             Serial serial = null;
             for (Serial tempSerial
-                    : dataBase.serialsData) {
+                    : dataBase.getSerials()) {
                 if (tempSerial.getTitle().equals(action.getTitle())) {
                     serial = tempSerial;
                     break;
@@ -189,8 +169,8 @@ public class Command {
                 return -1;
             } else {
                 Season season = seasons.get(ssn - 1);
-                season.numberOfRatings++;
-                season.sumOfRatings += action.getGrade();
+                season.setNumberOfRatings(season.getNumberOfRatings() + 1);
+                season.setSumOfRatings(season.getSumOfRatings() + action.getGrade());
                 List<Double> ratings = season.getRatings();
                 ratings.add(action.getGrade());
                 season.setRatings(ratings);
@@ -200,13 +180,13 @@ public class Command {
         StringBuilder str = new StringBuilder(action.getTitle());
         Integer num = action.getSeasonNumber();
         str.append(num.toString());
-        user.rated.add(str.toString());
+        user.getRated().add(str.toString());
 
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "success -> " + action.getTitle() + " was rated with "
                             + action.getGrade() + " by " + action.getUsername());
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
             return -1;

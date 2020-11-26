@@ -1,23 +1,20 @@
 package action.recommendation;
 
 import fileio.ActionInputData;
-import fileio.ShowInput;
 import files.ModifiableDB;
-import files.Movie;
 import files.Serial;
+import files.Show;
 import files.User;
 import org.json.simple.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PopularRecommendation {
     private ModifiableDB dataBase;
     private ActionInputData action;
-    public PopularRecommendation(ModifiableDB dataBase, ActionInputData action) {
+    public PopularRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         popular();
@@ -25,10 +22,10 @@ public class PopularRecommendation {
 
     private void popular() {
         String found = null;
-        User user = getRightUser();
+        User user = User.getRightUser(dataBase, action.getUsername());
 
         if (user.getSubscriptionType().equals("PREMIUM")) {
-            ArrayList<ShowInput> videos = new ArrayList<>(dataBase.getMovies());
+            ArrayList<Show> videos = new ArrayList<>(dataBase.getMovies());
             for (Serial s
                     : dataBase.getSerials()) {
                 videos.add(s);
@@ -37,11 +34,12 @@ public class PopularRecommendation {
             ArrayList<String> popular = getMostPopularGen(videos);
 
             for (int i = 0; i < popular.size() && found == null; i++) {
-                for (ShowInput mv
+                for (Show mv
                         : videos) {
                     if (mv.getGenres().contains(popular.get(i))
-                        && (!user.history.containsKey(mv.getTitle()) || user.history.get(mv.getTitle()) == 0)
-                        && found == null) {
+                            && (!user.getHistory().containsKey(mv.getTitle())
+                            || user.getHistory().get(mv.getTitle()) == 0)
+                            && found == null) {
                         found = mv.getTitle();
                     }
                 }
@@ -51,42 +49,24 @@ public class PopularRecommendation {
         try {
             JSONObject out;
             if (found == null) {
-                out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+                out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                         "PopularRecommendation cannot be applied!");
             } else {
-                out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+                out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                         "PopularRecommendation result: " + found);
             }
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
         }
     }
 
-    private User getRightUser() {
-        List<User> users = dataBase.getUsers();
-        User user = null;
-
-        // search the right user in the database
-        for (User tempUsr
-                : users) {
-            if (tempUsr.getUsername().equals(action.getUsername())) {
-                user = tempUsr;
-                break;
-            }
-        }
-        if (user == null) {
-            System.out.println("Invalid user!");
-        }
-        return user;
-    }
-
-    private ArrayList<String> getMostPopularGen(ArrayList<ShowInput> videos) {
-        calculateShowViews(videos);
+    private ArrayList<String> getMostPopularGen(final ArrayList<Show> videos) {
+        Show.calculateViewCnt(videos, dataBase);
 
         // build a map with all genres and their total view count
         Map<String, Integer> genres = new HashMap<>();
-        for (ShowInput video
+        for (Show video
              : videos) {
             for (String gen
                     : video.getGenres()) {
@@ -113,19 +93,5 @@ public class PopularRecommendation {
             }
         }
         return genList;
-    }
-
-    private void calculateShowViews(ArrayList<ShowInput> videos) {
-        for (ShowInput video
-                : videos) {
-            int cnt = 0;
-            for (User user
-                    : dataBase.getUsers()) {
-                if (user.history.containsKey(video.getTitle())) {
-                    cnt += user.history.get(video.getTitle());
-                }
-            }
-            video.setViewCnt(cnt);
-        }
     }
 }

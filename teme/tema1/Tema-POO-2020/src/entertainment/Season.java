@@ -26,8 +26,29 @@ public final class Season {
      * not in the original skel
      * additions start here
      */
-    public double sumOfRatings = 0;
-    public int numberOfRatings = 0;
+    private double sumOfRatings = 0;
+    private int numberOfRatings = 0;
+
+    public double getSumOfRatings() {
+        return sumOfRatings;
+    }
+
+    public void setSumOfRatings(final double sumOfRatings) {
+        this.sumOfRatings = sumOfRatings;
+    }
+
+    public int getNumberOfRatings() {
+        return numberOfRatings;
+    }
+
+    public void setNumberOfRatings(final int numberOfRatings) {
+        this.numberOfRatings = numberOfRatings;
+    }
+
+    /**
+     * Returns the rating of the current season
+     * @return a double value
+     */
     public double getRating() {
         if (numberOfRatings == 0) {
             return 0;

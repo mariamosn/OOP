@@ -123,4 +123,22 @@ public final class Utils {
 
         return mapVideos;
     }
+
+    /**
+     * Returns the number correspondent to a specific filter
+     * @param filter String
+     * @return an int value
+     */
+    public static int getFilterNum(final String filter) {
+        final int yearCode = 0, genreCode = 1, wordsCode = 2, awardsCode = 3;
+        if (filter.equals("year")) {
+            return yearCode;
+        } else if (filter.equals("genre")) {
+            return genreCode;
+        } else if (filter.equals("words")) {
+            return wordsCode;
+        } else {
+            return awardsCode;
+        }
+    }
 }

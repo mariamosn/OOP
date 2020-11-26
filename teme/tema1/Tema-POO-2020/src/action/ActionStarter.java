@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
 
 public class ActionStarter {
     private ModifiableDB dataBase;
-    public ActionStarter(final Input input, Writer fileWriter, JSONArray arrayResult) {
+    public ActionStarter(final Input input, final Writer fileWriter, final JSONArray arrayResult) {
         dataBase = new ModifiableDB(input, fileWriter, arrayResult);
         for (int i = 0; i < input.getCommands().size(); i++) {
             ActionInputData next = input.getCommands().get(i);

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActorAverage {
-    ModifiableDB dataBase;
-    ActionInputData action;
+    private ModifiableDB dataBase;
+    private ActionInputData action;
 
-    public ActorAverage(ModifiableDB dataBase, ActionInputData action) {
+    public ActorAverage(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         average();
@@ -24,31 +24,32 @@ public class ActorAverage {
         calculateAverage();
 
         ArrayList<String> queryRes = new ArrayList<>();
+        List<Actor> actors = dataBase.getActors();
         if (action.getSortType().equals("desc")) {
-            for (int i = 0; i < dataBase.actorsData.size() - 1; i++) {
-                for (int j = i + 1; j < dataBase.actorsData.size(); j++) {
-                    double avg1 = dataBase.actorsData.get(i).getAverage();
-                    double avg2 = dataBase.actorsData.get(j).getAverage();
-                    if (avg1 < avg2 ||
-                            (avg1 == avg2
-                                    && dataBase.actorsData.get(i).getName().compareTo(dataBase.actorsData.get(j).getName()) < 0)) {
-                        Actor aux = dataBase.actorsData.get(i);
-                        dataBase.actorsData.set(i, dataBase.actorsData.get(j));
-                        dataBase.actorsData.set(j, aux);
+            for (int i = 0; i < actors.size() - 1; i++) {
+                for (int j = i + 1; j < actors.size(); j++) {
+                    double avg1 = actors.get(i).getAverage();
+                    double avg2 = actors.get(j).getAverage();
+                    if (avg1 < avg2
+                            || (avg1 == avg2
+                            && actors.get(i).getName().compareTo(actors.get(j).getName()) < 0)) {
+                        Actor aux = actors.get(i);
+                        actors.set(i, actors.get(j));
+                        actors.set(j, aux);
                     }
                 }
             }
         } else if (action.getSortType().equals("asc")) {
-            for (int i = 0; i < dataBase.actorsData.size() - 1; i++) {
-                for (int j = i + 1; j < dataBase.actorsData.size(); j++) {
-                    double avg1 = dataBase.actorsData.get(i).getAverage();
-                    double avg2 = dataBase.actorsData.get(j).getAverage();
-                    if (avg1 > avg2 ||
-                            (avg1 == avg2
-                                    && dataBase.actorsData.get(i).getName().compareTo(dataBase.actorsData.get(j).getName()) > 0)) {
-                        Actor aux = dataBase.actorsData.get(i);
-                        dataBase.actorsData.set(i, dataBase.actorsData.get(j));
-                        dataBase.actorsData.set(j, aux);
+            for (int i = 0; i < actors.size() - 1; i++) {
+                for (int j = i + 1; j < actors.size(); j++) {
+                    double avg1 = actors.get(i).getAverage();
+                    double avg2 = actors.get(j).getAverage();
+                    if (avg1 > avg2
+                            || (avg1 == avg2
+                            && actors.get(i).getName().compareTo(actors.get(j).getName()) > 0)) {
+                        Actor aux = actors.get(i);
+                        actors.set(i, dataBase.getActors().get(j));
+                        actors.set(j, aux);
                     }
                 }
             }
@@ -56,17 +57,15 @@ public class ActorAverage {
             System.out.println("Invalid sort type!");
         }
 
-        int ok = 0;
-        for (int i = 0; ok < action.getNumber() && i < dataBase.actorsData.size(); i++) {
-            if (dataBase.actorsData.get(i).getAverage() != 0) {
-                queryRes.add(dataBase.actorsData.get(i).getName());
-                ok++;
+        for (int i = 0; queryRes.size() < action.getNumber() && i < actors.size(); i++) {
+            if (actors.get(i).getAverage() != 0) {
+                queryRes.add(actors.get(i).getName());
             }
         }
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "Query result: " + queryRes);
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
         }
@@ -74,7 +73,7 @@ public class ActorAverage {
 
     private void calculateAverage() {
         for (Actor actor
-                : dataBase.actorsData) {
+                : dataBase.getActors()) {
             List<String> filmography = actor.getFilmography();
             double sum = 0;
             int number = 0;

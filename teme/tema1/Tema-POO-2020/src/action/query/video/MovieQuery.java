@@ -4,9 +4,9 @@ import fileio.ActionInputData;
 import files.ModifiableDB;
 
 public class MovieQuery {
-    ModifiableDB dataBase;
-    ActionInputData action;
-    public MovieQuery(ModifiableDB dataBase, ActionInputData action) {
+    private ModifiableDB dataBase;
+    private ActionInputData action;
+    public MovieQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         if (action.getCriteria().equals("ratings")) {

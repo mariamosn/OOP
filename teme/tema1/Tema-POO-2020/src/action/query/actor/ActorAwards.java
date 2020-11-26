@@ -4,7 +4,6 @@ import actor.ActorsAwards;
 import fileio.ActionInputData;
 import files.Actor;
 import files.ModifiableDB;
-import jdk.jshell.execution.Util;
 import org.json.simple.JSONObject;
 import utils.Utils;
 
@@ -15,16 +14,17 @@ import java.util.List;
 public class ActorAwards {
     private ModifiableDB dataBase;
     private ActionInputData action;
-    public ActorAwards (ModifiableDB dataBase, ActionInputData action) {
+    public ActorAwards(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         awards();
     }
 
     private void awards() {
-        List<String> listOfAwards = action.getFilters().get(3);
+        int filterNum = Utils.getFilterNum("awards");
+        List<String> listOfAwards = action.getFilters().get(filterNum);
         // get the actors with all the wanted awards
-        List<Actor> suitableActors = new ArrayList<Actor>();
+        List<Actor> actors = new ArrayList<Actor>();
         for (Actor actor
                 : dataBase.getActors()) {
             int ok = 1;
@@ -37,56 +37,56 @@ public class ActorAwards {
                 }
             }
             if (ok == 1) {
-                suitableActors.add(actor);
+                actors.add(actor);
             }
         }
 
         for (Actor actor
-                : suitableActors) {
+                : actors) {
             calculateAwardsNumber(actor);
         }
 
         // sort actors
         if (action.getSortType().equals("asc")) {
-            for (int i = 0; i < suitableActors.size() - 1; i++) {
-                for (int j = i + 1; j < suitableActors.size(); j++) {
-                    if (suitableActors.get(i).getAwardsCnt() > suitableActors.get(j).getAwardsCnt()
-                            || (suitableActors.get(i).getAwardsCnt() == suitableActors.get(j).getAwardsCnt()
-                            && suitableActors.get(i).getName().compareTo(suitableActors.get(j).getName()) > 0)){
-                        Actor aux = suitableActors.get(i);
-                        suitableActors.set(i, suitableActors.get(j));
-                        suitableActors.set(j, aux);
+            for (int i = 0; i < actors.size() - 1; i++) {
+                for (int j = i + 1; j < actors.size(); j++) {
+                    if (actors.get(i).getAwardsCnt() > actors.get(j).getAwardsCnt()
+                            || (actors.get(i).getAwardsCnt() == actors.get(j).getAwardsCnt()
+                            && actors.get(i).getName().compareTo(actors.get(j).getName()) > 0)) {
+                        Actor aux = actors.get(i);
+                        actors.set(i, actors.get(j));
+                        actors.set(j, aux);
                     }
                 }
             }
         } else {
-            for (int i = 0; i < suitableActors.size() - 1; i++) {
-                for (int j = i + 1; j < suitableActors.size(); j++) {
-                    if (suitableActors.get(i).getAwardsCnt() < suitableActors.get(j).getAwardsCnt()
-                    || (suitableActors.get(i).getAwardsCnt() == suitableActors.get(j).getAwardsCnt()
-                    && suitableActors.get(i).getName().compareTo(suitableActors.get(j).getName()) < 0)) {
-                        Actor aux = suitableActors.get(i);
-                        suitableActors.set(i, suitableActors.get(j));
-                        suitableActors.set(j, aux);
+            for (int i = 0; i < actors.size() - 1; i++) {
+                for (int j = i + 1; j < actors.size(); j++) {
+                    if (actors.get(i).getAwardsCnt() < actors.get(j).getAwardsCnt()
+                    || (actors.get(i).getAwardsCnt() == actors.get(j).getAwardsCnt()
+                    && actors.get(i).getName().compareTo(actors.get(j).getName()) < 0)) {
+                        Actor aux = actors.get(i);
+                        actors.set(i, actors.get(j));
+                        actors.set(j, aux);
                     }
                 }
             }
         }
 
         ArrayList<String> queryRes = new ArrayList<>();
-        for (int i = 0; i < suitableActors.size(); i++) {
-            queryRes.add(suitableActors.get(i).getName());
+        for (int i = 0; i < actors.size(); i++) {
+            queryRes.add(actors.get(i).getName());
         }
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "Query result: " + queryRes);
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
         }
     }
 
-    private void calculateAwardsNumber(Actor actor) {
+    private void calculateAwardsNumber(final Actor actor) {
         int cnt = 0;
         List<Integer> awards = new ArrayList<>(actor.getAwards().values());
         for (Integer awardCnt

@@ -4,9 +4,9 @@ import fileio.ActionInputData;
 import files.ModifiableDB;
 
 public class ActorQuery {
-    ModifiableDB dataBase;
-    ActionInputData action;
-    public ActorQuery(ModifiableDB dataBase, ActionInputData action) {
+    private ModifiableDB dataBase;
+    private ActionInputData action;
+    public ActorQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         if (action.getCriteria().equals("average")) {

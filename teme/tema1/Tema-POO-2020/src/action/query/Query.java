@@ -10,7 +10,7 @@ import files.ModifiableDB;
 public class Query {
     private ModifiableDB dataBase;
     private ActionInputData action;
-    public Query(ModifiableDB dataBase, ActionInputData action) {
+    public Query(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = new ModifiableDB(dataBase);
         this.action = action;
         if (action.getObjectType().equals("actors")) {

@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class ActorFilter {
     private ModifiableDB dataBase;
     private ActionInputData action;
-    public ActorFilter (ModifiableDB dataBase, ActionInputData action) {
+    public ActorFilter(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         filter();
@@ -28,8 +28,6 @@ public class ActorFilter {
                 : dataBase.getActors()) {
             int ok = 1;
             String desc = actor.getCareerDescription().toLowerCase();
-            if (actor.getName().equals("Aidan Quinn")) {
-            }
             for (String word
                     : listOfWords) {
                 StringBuilder str = new StringBuilder(" ");
@@ -50,7 +48,9 @@ public class ActorFilter {
         // sort actors
         for (int i = 0; i < suitableActors.size() - 1; i++) {
             for (int j = i + 1; j < suitableActors.size(); j++) {
-                if (suitableActors.get(i).getName().compareTo(suitableActors.get(j).getName()) > 0){
+                String act1 = suitableActors.get(i).getName();
+                String act2 = suitableActors.get(j).getName();
+                if (act1.compareTo(act2) > 0) {
                     Actor aux = suitableActors.get(i);
                     suitableActors.set(i, suitableActors.get(j));
                     suitableActors.set(j, aux);
@@ -69,9 +69,9 @@ public class ActorFilter {
         }
 
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "Query result: " + queryRes);
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
         }

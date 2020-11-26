@@ -6,7 +6,7 @@ import files.ModifiableDB;
 public class Recommendation {
     private ModifiableDB dataBase;
     private ActionInputData action;
-    public Recommendation(ModifiableDB dataBase, ActionInputData action) {
+    public Recommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = new ModifiableDB(dataBase);
         this.action = action;
         if (action.getType().equals("standard")) {

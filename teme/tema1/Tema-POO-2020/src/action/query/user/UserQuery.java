@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserQuery {
-    ModifiableDB dataBase;
-    ActionInputData action;
-    public UserQuery(ModifiableDB dataBase, ActionInputData action) {
+    private ModifiableDB dataBase;
+    private ActionInputData action;
+    public UserQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         numOfRatings();
@@ -42,23 +42,24 @@ public class UserQuery {
                     }
                 }
                 if (ok == 1) {
-                    User aux = dataBase.usersData.get(i);
-                    dataBase.getUsers().set(i, dataBase.usersData.get(j));
+                    User aux = dataBase.getUsers().get(i);
+                    dataBase.getUsers().set(i, dataBase.getUsers().get(j));
                     dataBase.getUsers().set(j, aux);
                 }
             }
         }
 
         ArrayList<String> queryRes = new ArrayList<>();
-        for (int i = 0; i < dataBase.getUsers().size() && queryRes.size() < action.getNumber(); i++) {
+        for (int i = 0; i < dataBase.getUsers().size()
+                && queryRes.size() < action.getNumber(); i++) {
             if (dataBase.getUsers().get(i).getRatingsNum() != 0) {
                 queryRes.add(dataBase.getUsers().get(i).getUsername());
             }
         }
         try {
-            JSONObject out = dataBase.fileWriter.writeFile(action.getActionId(), "",
+            JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "Query result: " + queryRes);
-            dataBase.arrayResult.add(out);
+            dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
         }
