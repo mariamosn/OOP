@@ -21,11 +21,6 @@ public final class Season {
      * List of ratings for each season
      */
     private List<Double> ratings;
-
-    /**
-     * not in the original skel
-     * additions start here
-     */
     private double sumOfRatings = 0;
     private int numberOfRatings = 0;
 
@@ -56,10 +51,6 @@ public final class Season {
             return sumOfRatings / numberOfRatings;
         }
     }
-    /**
-     * not in the original skel
-     * additions end here
-     */
 
     public Season(final int currentSeason, final int duration) {
         this.currentSeason = currentSeason;

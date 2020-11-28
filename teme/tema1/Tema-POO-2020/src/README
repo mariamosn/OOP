@@ -1,0 +1,6 @@
+Maria Moșneag 323CA
+
+Command - Rating
+	Ratingurile date de fiecare utilizator sunt reținute sub forma unei liste
+de string-uri în care fiecare string este de forma: titluX, unde X este numarul
+sezonului în cazul serialelor, respectiv 0, în cazul filmelor.

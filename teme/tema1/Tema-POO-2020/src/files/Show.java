@@ -6,9 +6,7 @@ import fileio.ShowInput;
 import java.util.ArrayList;
 
 /**
- * General information about show (video), retrieved from parsing the input test files
- * <p>
- * DO NOT MODIFY
+ * General information about a show (video), retrieved from parsing the input test files
  */
 public abstract class Show {
     /**

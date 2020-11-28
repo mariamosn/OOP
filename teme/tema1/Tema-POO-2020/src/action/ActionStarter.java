@@ -18,6 +18,10 @@ public class ActionStarter {
         }
     }
 
+    /**
+     * The method checks what type of action the current one is and
+     * creates an instance of a specific class accordingly.
+     */
     private void actionCaller(final ActionInputData action) {
         if (action.getActionType().equals("command")) {
             new Command(dataBase, action);

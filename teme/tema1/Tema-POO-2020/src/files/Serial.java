@@ -23,8 +23,9 @@ public class Serial extends Show {
     public Serial() {
         this.numberOfSeasons = 0;
     }
+
     /**
-     * Returns the number of seasons
+     * Getter for the number of seasons
      */
     public int getNumberSeason() {
         return numberOfSeasons;

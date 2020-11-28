@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ModifiableDB {
     /**
-     * Original input
+     * the original input
      */
     private Input input;
     private Writer fileWriter;

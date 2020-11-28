@@ -4,6 +4,7 @@ import fileio.ActionInputData;
 import files.Actor;
 import files.ModifiableDB;
 import org.json.simple.JSONObject;
+import utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,14 +15,21 @@ import java.util.regex.Pattern;
 public class ActorFilter {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public ActorFilter(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         filter();
     }
 
+    /**
+     * The method gets the result of the Filter query.
+     */
     private void filter() {
-        List<String> listOfWords = action.getFilters().get(2);
+        // get the list of wanted words
+        int ind = Utils.getFilterNum("words");
+        List<String> listOfWords = action.getFilters().get(ind);
+
         // get the actors with all the wanted words in their description
         List<Actor> suitableActors = new ArrayList<Actor>();
         for (Actor actor
@@ -30,9 +38,6 @@ public class ActorFilter {
             String desc = actor.getCareerDescription().toLowerCase();
             for (String word
                     : listOfWords) {
-                StringBuilder str = new StringBuilder(" ");
-                str.append(word.toLowerCase());
-                str.append(" ");
                 Pattern p = Pattern.compile("[!._,'@?/ -]" + word.toLowerCase() + "[!._,'@?/ -]");
                 Matcher m = p.matcher(desc);
                 if (!m.find()) {
@@ -45,7 +50,7 @@ public class ActorFilter {
             }
         }
 
-        // sort actors
+        // sort actors based on their names
         for (int i = 0; i < suitableActors.size() - 1; i++) {
             for (int j = i + 1; j < suitableActors.size(); j++) {
                 String act1 = suitableActors.get(i).getName();
@@ -57,6 +62,7 @@ public class ActorFilter {
                 }
             }
         }
+
         ArrayList<String> queryRes = new ArrayList<>();
         if (action.getSortType().equals("asc")) {
             for (int i = 0; i < suitableActors.size(); i++) {

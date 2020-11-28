@@ -14,15 +14,21 @@ import java.util.List;
 public class ActorAwards {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public ActorAwards(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         awards();
     }
 
+    /**
+     * The method gets the result of the Awards query
+     */
     private void awards() {
+        // get the list of the wanted awards
         int filterNum = Utils.getFilterNum("awards");
         List<String> listOfAwards = action.getFilters().get(filterNum);
+
         // get the actors with all the wanted awards
         List<Actor> actors = new ArrayList<Actor>();
         for (Actor actor
@@ -46,7 +52,7 @@ public class ActorAwards {
             calculateAwardsNumber(actor);
         }
 
-        // sort actors
+        // sort actors based on the number of awards they have and their names
         if (action.getSortType().equals("asc")) {
             for (int i = 0; i < actors.size() - 1; i++) {
                 for (int j = i + 1; j < actors.size(); j++) {
@@ -86,6 +92,10 @@ public class ActorAwards {
         }
     }
 
+    /**
+     * The method gets the total number of awards for each actor in the
+     * @param actor list of actors
+     */
     private void calculateAwardsNumber(final Actor actor) {
         int cnt = 0;
         List<Integer> awards = new ArrayList<>(actor.getAwards().values());

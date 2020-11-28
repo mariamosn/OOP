@@ -20,11 +20,16 @@ public class ActorAverage {
         this.action = action;
         average();
     }
+
+    /**
+     * Method that gets the result of the Average query
+     */
     private void average() {
         calculateAverage();
 
         ArrayList<String> queryRes = new ArrayList<>();
         List<Actor> actors = dataBase.getActors();
+        // sort actors based on average ratings
         if (action.getSortType().equals("desc")) {
             for (int i = 0; i < actors.size() - 1; i++) {
                 for (int j = i + 1; j < actors.size(); j++) {
@@ -71,12 +76,17 @@ public class ActorAverage {
         }
     }
 
+    /**
+     * The method calculates for each actor the average rating
+     * for all the shows they were casted in.
+     */
     private void calculateAverage() {
         for (Actor actor
                 : dataBase.getActors()) {
             List<String> filmography = actor.getFilmography();
             double sum = 0;
             int number = 0;
+            // get each show in the actor's filmography
             for (String video
                     : filmography) {
                 int ok = 0;

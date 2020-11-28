@@ -18,8 +18,11 @@ public class UserQuery {
         numOfRatings();
     }
 
+    /**
+     * The method gets the result of the query
+     */
     private void numOfRatings() {
-        // sort users based on the number of videos rated
+        // sort users based on the number of videos they rated and their names
         List<User> users = dataBase.getUsers();
         for (int i = 0; i < users.size() - 1; i++) {
             for (int j = i + 1; j < users.size(); j++) {

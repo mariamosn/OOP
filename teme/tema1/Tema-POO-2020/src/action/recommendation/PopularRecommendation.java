@@ -14,17 +14,22 @@ import java.util.Map;
 public class PopularRecommendation {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public PopularRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         popular();
     }
 
+    /**
+     * The method gets the result of the popular recommendation.
+     */
     private void popular() {
         String found = null;
         User user = User.getRightUser(dataBase, action.getUsername());
 
         if (user.getSubscriptionType().equals("PREMIUM")) {
+            // videos will contain all shows (movies and serials)
             ArrayList<Show> videos = new ArrayList<>(dataBase.getMovies());
             for (Serial s
                     : dataBase.getSerials()) {
@@ -33,6 +38,7 @@ public class PopularRecommendation {
 
             ArrayList<String> popular = getMostPopularGen(videos);
 
+            // get the first unseen movie from the most popular genre
             for (int i = 0; i < popular.size() && found == null; i++) {
                 for (Show mv
                         : videos) {
@@ -61,6 +67,10 @@ public class PopularRecommendation {
         }
     }
 
+    /**
+     * The method returns an array of strings with the names of the most
+     * popular genres, in decreasing order.
+     */
     private ArrayList<String> getMostPopularGen(final ArrayList<Show> videos) {
         Show.calculateViewCnt(videos, dataBase);
 
@@ -78,11 +88,14 @@ public class PopularRecommendation {
             }
         }
 
+        // create a list with all the genres
         ArrayList<String> genList = new ArrayList<>();
         for (String str
                 : genres.keySet()) {
             genList.add(str);
         }
+
+        // sort the genres list based on popularity (total number of views)
         for (int i = 0; i < genList.size() - 1; i++) {
             for (int j = i + 1; j < genList.size(); j++) {
                 if (genres.get(genList.get(i)) < genres.get(genList.get(j))) {

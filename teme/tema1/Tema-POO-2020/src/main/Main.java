@@ -71,10 +71,8 @@ public final class Main {
         Writer fileWriter = new Writer(filePath2);
         JSONArray arrayResult = new JSONArray();
 
-        //TODO add here the entry point to your implementation
+        // TODO add here the entry point to your implementation
         ActionStarter init = new ActionStarter(input, fileWriter, arrayResult);
-
-
         fileWriter.closeJSON(arrayResult);
     }
 }

@@ -21,6 +21,11 @@ public class Command {
         this.user = User.getRightUser(dataBase, action.getUsername());
         commandSolver();
     }
+
+    /**
+     * The method checks the type of command the current one is
+     * and dictates the next method to be executed.
+     */
     private void commandSolver() {
         if (action.getType().equals("favorite")) {
             commandFavorite();
@@ -33,6 +38,9 @@ public class Command {
         }
     }
 
+    /**
+     * Method that adds a video to the favorite list of an user
+     */
     private int commandFavorite() {
         // check if the movie has been seen
         if (!user.getHistory().containsKey(action.getTitle())
@@ -64,7 +72,7 @@ public class Command {
             }
         }
 
-        // add to favorite
+        // add to favorite list
         user.getFavoriteMovies().add(action.getTitle());
 
         try {
@@ -78,6 +86,9 @@ public class Command {
         return 0;
     }
 
+    /**
+     * Method that adds a view to a video
+     */
     private int commandView() {
         int cnt;
         if (user.getHistory().containsKey(action.getTitle())) {
@@ -86,6 +97,7 @@ public class Command {
             cnt = 1;
         }
         user.getHistory().put(action.getTitle(), cnt);
+
         try {
             JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                     "success -> " + action.getTitle() + " was viewed with total views of " + cnt);
@@ -97,6 +109,9 @@ public class Command {
         return 0;
     }
 
+    /**
+     * Method that adds a rating to video
+     */
     private int commandRating() {
         // check if the video is seen
         if (!user.getHistory().containsKey(action.getTitle())
@@ -133,7 +148,7 @@ public class Command {
         }
 
         int ssn = action.getSeasonNumber();
-        // rating for movie
+        // rating for a movie
         if (ssn == 0) {
             // get the right movie from the database
             Movie crt = null;
@@ -152,7 +167,7 @@ public class Command {
             crt.setSumOfRatings(crt.getSumOfRatings() + action.getGrade());
             crt.setNumberOfRatings(crt.getNumberOfRatings() + 1);
 
-        // rating for season
+        // rating for a season
         } else {
             // get the right serial from the database
             Serial serial = null;

@@ -12,24 +12,29 @@ import java.util.ArrayList;
 public class SearchRecommendation {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public SearchRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         search();
     }
 
+    /**
+     * The method gets the result of the Search recommendation.
+     */
     private void search() {
         ArrayList<String> result = new ArrayList<>();
         User user = User.getRightUser(dataBase, action.getUsername());
 
         if (user.getSubscriptionType().equals("PREMIUM")) {
+            // videos will contain all the shows (movies and serials)
             ArrayList<Show> videos = new ArrayList<>(dataBase.getMovies());
             for (Serial s
                     : dataBase.getSerials()) {
                 videos.add(s);
             }
 
-            // check filters
+            // check filters and if the video is unseen
             ArrayList<Show> suitable = new ArrayList<>();
             for (Show video
                     : videos) {

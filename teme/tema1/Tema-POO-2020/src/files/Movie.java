@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Movie extends Show {
     /**
-     * Duration in minutes of a season
+     * Duration in minutes of the movie
      */
     private int duration;
     private double sumOfRatings;
@@ -68,7 +68,7 @@ public class Movie extends Show {
         }
     }
     /**
-     * Transforms the Movie to a String
+     * Transforms the Movie into a String
      */
     @Override
     public String toString() {

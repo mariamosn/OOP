@@ -19,8 +19,13 @@ public class BestRecommendation {
         bestUnseen();
     }
 
+    /**
+     * The method gets the result of the Best recommendation
+     */
     private void bestUnseen() {
+        // pos contains the position of a sho in the original order
         Map<Show, Integer> pos = new HashMap<>();
+        // videos will contain all shows (both movies and serials)
         ArrayList<Show> videos = new ArrayList<>();
         for (Show s
                 : dataBase.getMovies()) {
@@ -33,7 +38,7 @@ public class BestRecommendation {
             pos.put(s, videos.size() - 1);
         }
 
-        // sort videos desc based on ratings
+        // sort videos desc based on ratings and their original position
         for (int i = 0; i < videos.size() - 1; i++) {
             for (int j = i + 1; j < videos.size(); j++) {
                 if (videos.get(i).getRating() < videos.get(j).getRating()
@@ -48,8 +53,10 @@ public class BestRecommendation {
 
         User user = User.getRightUser(dataBase, action.getUsername());
 
+        // find the best recommendation
         String found = null;
         for (int i = 0; i < videos.size() && found == null; i++) {
+            // check if the video hasn't already been seen
             if (!user.getHistory().containsKey(videos.get(i).getTitle())
             || user.getHistory().get(videos.get(i).getTitle()) == 0) {
                 found = videos.get(i).getTitle();

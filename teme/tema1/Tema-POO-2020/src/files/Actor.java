@@ -34,6 +34,7 @@ public class Actor {
         this.filmography = actor.getFilmography();
         this.awards = actor.getAwards();
     }
+
     /**
      * Getter for the name of an actor
      */
@@ -47,7 +48,7 @@ public class Actor {
         this.name = name;
     }
     /**
-     * Getter for the Filmography
+     * Getter for Filmography
      */
     public ArrayList<String> getFilmography() {
         return filmography;
@@ -104,7 +105,7 @@ public class Actor {
         this.awardsCnt = awardsCnt;
     }
     /**
-     * The method transforms the Actor to a String
+     * The method transforms the Actor into a String
      */
     @Override
     public String toString() {

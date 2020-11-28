@@ -11,15 +11,20 @@ import java.io.IOException;
 public class StandardRecommendation {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public StandardRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
         standard();
     }
 
+    /**
+     * The method gets the result of the Standard recommendation.
+     */
     private void standard() {
         User user = User.getRightUser(dataBase, action.getUsername());
         String video = null;
+        // check movies
         for (Movie mv
                 : dataBase.getMovies()) {
             if (!user.getHistory().containsKey(mv.getTitle())
@@ -28,6 +33,7 @@ public class StandardRecommendation {
                 break;
             }
         }
+        // check serials
         if (video == null) {
             for (Serial serial
                     : dataBase.getSerials()) {
