@@ -17,14 +17,11 @@ public class ActorQuery {
      * and decides what action will be executed next
      */
     private void querySolver() {
-        if (action.getCriteria().equals("average")) {
-            new ActorAverage(this.dataBase, action);
-        } else if (action.getCriteria().equals("awards")) {
-            new ActorAwards(this.dataBase, action);
-        } else if (action.getCriteria().equals("filter_description")) {
-            new ActorFilter(this.dataBase, action);
-        } else {
-            System.out.println("Invalid criteria!");
+        switch (action.getCriteria()) {
+            case "average" -> new ActorAverage(this.dataBase, action);
+            case "awards" -> new ActorAwards(this.dataBase, action);
+            case "filter_description" -> new ActorFilter(this.dataBase, action);
+            default -> System.out.println("Invalid criteria!");
         }
     }
 }

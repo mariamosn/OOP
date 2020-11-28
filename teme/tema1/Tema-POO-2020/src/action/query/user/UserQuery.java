@@ -12,6 +12,7 @@ import java.util.List;
 public class UserQuery {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public UserQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
@@ -26,6 +27,7 @@ public class UserQuery {
         List<User> users = dataBase.getUsers();
         for (int i = 0; i < users.size() - 1; i++) {
             for (int j = i + 1; j < users.size(); j++) {
+                // ok indicates if the two current users need to be swapped
                 int ok = 0;
                 if (action.getSortType().equals("asc")) {
                     if (users.get(i).getRatingsNum() > users.get(j).getRatingsNum()) {

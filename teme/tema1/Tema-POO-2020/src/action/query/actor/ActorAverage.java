@@ -29,6 +29,7 @@ public class ActorAverage {
 
         ArrayList<String> queryRes = new ArrayList<>();
         List<Actor> actors = dataBase.getActors();
+
         // sort actors based on average ratings
         if (action.getSortType().equals("desc")) {
             for (int i = 0; i < actors.size() - 1; i++) {

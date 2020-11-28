@@ -11,14 +11,17 @@ public class Query {
     private ModifiableDB dataBase;
     private ActionInputData action;
 
+    public Query(final ModifiableDB dataBase, final ActionInputData action) {
+        this.dataBase = new ModifiableDB(dataBase);
+        this.action = action;
+        delegate();
+    }
+
     /**
      * The method checks the type of query the current one is
      * and dictates the next actions that need to be done.
      */
-    public Query(final ModifiableDB dataBase, final ActionInputData action) {
-        this.dataBase = new ModifiableDB(dataBase);
-        this.action = action;
-
+    private void delegate() {
         if (action.getObjectType().equals("actors")) {
             new ActorQuery(this.dataBase, action);
         } else if (action.getObjectType().equals("movies")) {

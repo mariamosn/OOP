@@ -13,6 +13,7 @@ import java.util.Map;
 public class BestRecommendation {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public BestRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;

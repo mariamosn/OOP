@@ -30,7 +30,7 @@ public class ActorAwards {
         List<String> listOfAwards = action.getFilters().get(filterNum);
 
         // get the actors with all the wanted awards
-        List<Actor> actors = new ArrayList<Actor>();
+        List<Actor> actors = new ArrayList<>();
         for (Actor actor
                 : dataBase.getActors()) {
             int ok = 1;
@@ -80,8 +80,10 @@ public class ActorAwards {
         }
 
         ArrayList<String> queryRes = new ArrayList<>();
-        for (int i = 0; i < actors.size(); i++) {
-            queryRes.add(actors.get(i).getName());
+        for (Actor actor
+                : actors
+             ) {
+            queryRes.add(actor.getName());
         }
         try {
             JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",

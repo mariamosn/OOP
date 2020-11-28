@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class SerialRating {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public SerialRating(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;

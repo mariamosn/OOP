@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class MovieLongest {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public MovieLongest(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
@@ -25,7 +26,6 @@ public class MovieLongest {
         // sort movies based on duration and title
         Show.sortBasedOnDuration(suitableMovies, action.getSortType());
 
-        //ArrayList<String> queryRes = Show.ShowsToString(suitableMovies, action.getNumber());
         ArrayList<String> queryRes = new ArrayList<>();
         for (int i = 0; i < suitableMovies.size() && queryRes.size() < action.getNumber(); i++) {
             queryRes.add(suitableMovies.get(i).getTitle());

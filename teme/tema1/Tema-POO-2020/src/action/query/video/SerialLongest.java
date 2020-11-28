@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class SerialLongest {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public SerialLongest(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;

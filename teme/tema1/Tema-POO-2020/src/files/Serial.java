@@ -31,7 +31,7 @@ public class Serial extends Show {
         return numberOfSeasons;
     }
     /**
-     * Returns an array with all the seasons of the current serial
+     * Getter for the list of seasons for the current serial
      */
     public ArrayList<Season> getSeasons() {
         return seasons;
@@ -54,6 +54,7 @@ public class Serial extends Show {
     /**
      * Returns the total duration of the current serial, based on its seasons
      */
+    @Override
     public int getDuration() {
         int duration = 0;
         for (Season s
@@ -62,21 +63,11 @@ public class Serial extends Show {
         }
         return duration;
     }
-    /**
-     * Transforms the current serial into a String
-     */
-    @Override
-    public String toString() {
-        return "Serial{" + " title= "
-                + super.getTitle() + " " + " year= "
-                + super.getYear() + " cast {"
-                + super.getCast() + " }\n" + " genres {"
-                + super.getGenres() + " }\n "
-                + " numberSeason= " + numberOfSeasons
-                + ", seasons=" + seasons + "\n\n" + '}';
-    }
+
     /**
      * Returns an array with all the shows that fit the filters of the current action
+     * @param action contains the filters that need to be applied
+     * @param dataBase contains information about all the serials
      */
     @Override
     public ArrayList<Show> checkFilters(final ModifiableDB dataBase, final ActionInputData action) {

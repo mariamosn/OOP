@@ -126,8 +126,8 @@ public final class Utils {
 
     /**
      * Returns the number correspondent to a specific filter
-     * @param filter String
-     * @return an int value
+     * @param filter = type of filter wanted
+     * @return an int value = the order index
      */
     public static int getFilterNum(final String filter) {
         final int yearCode = 0, genreCode = 1, wordsCode = 2, awardsCode = 3;

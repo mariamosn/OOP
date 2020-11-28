@@ -6,9 +6,14 @@ import files.ModifiableDB;
 public class MovieQuery {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public MovieQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
+        delegate();
+    }
+
+    private void delegate() {
         if (action.getCriteria().equals("ratings")) {
             new MovieRatings(dataBase, action);
         } else if (action.getCriteria().equals("favorite")) {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class MovieRatings {
     private ModifiableDB dataBase;
     private ActionInputData action;
+
     public MovieRatings(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;

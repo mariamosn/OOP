@@ -15,6 +15,7 @@ public class Command {
     private ModifiableDB dataBase;
     private ActionInputData action;
     private User user;
+
     protected Command(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;
@@ -148,6 +149,7 @@ public class Command {
         }
 
         int ssn = action.getSeasonNumber();
+
         // rating for a movie
         if (ssn == 0) {
             // get the right movie from the database

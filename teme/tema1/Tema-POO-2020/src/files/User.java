@@ -83,17 +83,6 @@ public class User {
         return rated.size();
     }
     /**
-     * The method transforms an user into a string
-     */
-    @Override
-    public String toString() {
-        return "User{" + "username='"
-                + username + '\'' + ", subscriptionType='"
-                + subscriptionType + '\'' + ", history="
-                + history + ", favoriteMovies="
-                + favoriteMovies + '}';
-    }
-    /**
      * The method returns an User based on the username
      * @param name = the username
      * @param dataBase = the database where the users are stored

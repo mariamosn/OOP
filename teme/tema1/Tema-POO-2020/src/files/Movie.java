@@ -29,6 +29,7 @@ public class Movie extends Show {
     /**
      * Getter for the movie's duration
      */
+    @Override
     public int getDuration() {
         return duration;
     }
@@ -40,6 +41,7 @@ public class Movie extends Show {
     }
     /**
      * Setter for the current sum of all the ratings
+     * @param sumOfRatings = the updated sum
      */
     public void setSumOfRatings(final double sumOfRatings) {
         this.sumOfRatings = sumOfRatings;
@@ -52,6 +54,7 @@ public class Movie extends Show {
     }
     /**
      * Setter for the current number of ratings
+     * @param numberOfRatings = the updated number of ratings
      */
     public void setNumberOfRatings(final int numberOfRatings) {
         this.numberOfRatings = numberOfRatings;
@@ -67,20 +70,11 @@ public class Movie extends Show {
             return sumOfRatings / numberOfRatings;
         }
     }
-    /**
-     * Transforms the Movie into a String
-     */
-    @Override
-    public String toString() {
-        return "Movie{" + "title= "
-                + super.getTitle() + "year= "
-                + super.getYear() + "duration= "
-                + duration + "cast {"
-                + super.getCast() + " }\n"
-                + "genres {" + super.getGenres() + " }\n ";
-    }
+
     /**
      * Returns an array with all the movies that fit the provided filters
+     * @param dataBase contains information about all the movies
+     * @param action contains the filters
      */
     @Override
     public ArrayList<Show> checkFilters(final ModifiableDB dataBase, final ActionInputData action) {

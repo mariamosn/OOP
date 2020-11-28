@@ -31,7 +31,7 @@ public class ActorFilter {
         List<String> listOfWords = action.getFilters().get(ind);
 
         // get the actors with all the wanted words in their description
-        List<Actor> suitableActors = new ArrayList<Actor>();
+        List<Actor> suitableActors = new ArrayList<>();
         for (Actor actor
                 : dataBase.getActors()) {
             int ok = 1;
@@ -65,8 +65,9 @@ public class ActorFilter {
 
         ArrayList<String> queryRes = new ArrayList<>();
         if (action.getSortType().equals("asc")) {
-            for (int i = 0; i < suitableActors.size(); i++) {
-                queryRes.add(suitableActors.get(i).getName());
+            for (Actor actor
+                    : suitableActors) {
+                queryRes.add(actor.getName());
             }
         } else {
             for (int i = suitableActors.size() - 1; i >= 0; i--) {

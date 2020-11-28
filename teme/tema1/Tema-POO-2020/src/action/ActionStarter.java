@@ -21,6 +21,7 @@ public class ActionStarter {
     /**
      * The method checks what type of action the current one is and
      * creates an instance of a specific class accordingly.
+     * @param action contains information about the current action type
      */
     private void actionCaller(final ActionInputData action) {
         if (action.getActionType().equals("command")) {

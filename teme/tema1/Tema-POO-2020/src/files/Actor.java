@@ -42,22 +42,10 @@ public class Actor {
         return name;
     }
     /**
-     * Setter for the name of an actor
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-    /**
      * Getter for Filmography
      */
     public ArrayList<String> getFilmography() {
         return filmography;
-    }
-    /**
-     * Setter for Filmography
-     */
-    public void setFilmography(final ArrayList<String> filmography) {
-        this.filmography = filmography;
     }
     /**
      * Getter for a map of awards
@@ -74,13 +62,7 @@ public class Actor {
         return careerDescription;
     }
     /**
-     * Setter for the career description
-     */
-    public void setCareerDescription(final String careerDescription) {
-        this.careerDescription = careerDescription;
-    }
-    /**
-     * Getter for average
+     * Getter for the average
      * = the average of the ratings of the shows the actor has in their filmography
      */
     public double getAverage() {
@@ -88,6 +70,7 @@ public class Actor {
     }
     /**
      * Setter for average
+     * @param average = the updated average
      */
     public void setAverage(final double average) {
         this.average = average;
@@ -100,6 +83,7 @@ public class Actor {
     }
     /**
      * Setter for the total number of awards
+     * @param awardsCnt = the updated award count
      */
     public void setAwardsCnt(final int awardsCnt) {
         this.awardsCnt = awardsCnt;
@@ -107,12 +91,4 @@ public class Actor {
     /**
      * The method transforms the Actor into a String
      */
-    @Override
-    public String toString() {
-        return "Actor{"
-                + "name='" + name + '\''
-                + ", careerDescription='"
-                + careerDescription + '\''
-                + ", filmography=" + filmography + '}';
-    }
 }

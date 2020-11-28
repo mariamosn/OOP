@@ -2,6 +2,7 @@ package files;
 
 import fileio.ActionInputData;
 import fileio.ShowInput;
+import utils.Utils;
 
 import java.util.ArrayList;
 
@@ -64,17 +65,15 @@ public abstract class Show {
         return genres;
     }
     /**
-     * The method is overridden in the classes that inherit Show (Movie and Serial)
+     * The method is overridden in the classes that inherit Show (Movie and Serial);
+     * returns the rating of the current show.
      */
-    public double getRating() {
-        return 0;
-    }
+    public abstract double getRating();
     /**
-     * The method is overridden in the classes that inherit Show (Movie and Serial)
+     * The method is overridden in the classes that inherit Show (Movie and Serial);
+     * returns the cumulated duration of the current show.
      */
-    public int getDuration() {
-        return 0;
-    }
+    public abstract int getDuration();
     /**
      * Getter for favCnt used to count how many times a show appears on users' favorite list
      */
@@ -83,6 +82,7 @@ public abstract class Show {
     }
     /**
      * Setter for favCnt
+     * @param favCnt = the updated number of favorite lists the current show appears on
      */
     public void setFavCnt(final int favCnt) {
         this.favCnt = favCnt;
@@ -95,12 +95,15 @@ public abstract class Show {
     }
     /**
      * Setter for viewCnt
+     * @param cnt = the updated view count for the current show
      */
     public void setViewCnt(final int cnt) {
         this.viewCnt = cnt;
     }
     /**
-     * The method calculates how many times each video from videos has been seen
+     * The method calculates how many times each video from a list has been seen
+     * @param videos = the list of videos that need updated view counts
+     * @param dataBase contains information about each user's watch history
      */
     public static void calculateViewCnt(final ArrayList<Show> videos, final ModifiableDB dataBase) {
         for (Show video
@@ -116,7 +119,9 @@ public abstract class Show {
         }
     }
     /**
-     * The method calculates how many times each video from videos appears on users' favorite list
+     * The method calculates how many times each video from a list appears on users' favorite lists
+     * @param videos = the list of videos that need updated favorite counts
+     * @param dataBase contains information about users' favorite lists
      */
     public static void calculateFavCnt(final ArrayList<Show> videos, final ModifiableDB dataBase) {
         for (Show mv
@@ -133,24 +138,29 @@ public abstract class Show {
     }
     /**
      * The method is overridden in the classes that inherit Show (Movie and Serial)
+     * @param dataBase contains information about shows
+     * @param action contains information about the current action (including the filters)
      */
-    public ArrayList<Show> checkFilters(final ModifiableDB dataBase, final ActionInputData action) {
-        ArrayList<Show> suitableMovies = new ArrayList<>();
-        return suitableMovies;
-    }
+    public abstract ArrayList<Show> checkFilters(ModifiableDB dataBase, ActionInputData action);
     /**
      * The method checks if a show fits with all the provided filters
+     * @param video = the show that needs to be checked
+     * @param action contains the filters
      */
     public boolean check(final Show video, final ActionInputData action) {
+        // check the year
         Integer yr = video.getYear();
-        if (action.getFilters().get(0) != null
-                && action.getFilters().get(0).get(0) != null
-                && action.getFilters().get(0).get(0).compareTo(yr.toString()) != 0) {
+        int filter = Utils.getFilterNum("year");
+        if (action.getFilters().get(filter).get(0) != null
+                && action.getFilters().get(filter).get(0).compareTo(yr.toString()) != 0) {
             return false;
-        } else if (action.getFilters().get(1) != null
-                && action.getFilters().get(1).get(0) != null) {
+        }
+
+        // check the genre
+        filter = Utils.getFilterNum("genre");
+        if (action.getFilters().get(filter).get(0) != null) {
             for (String genre
-                    : action.getFilters().get(1)) {
+                    : action.getFilters().get(filter)) {
                 if (!video.getGenres().contains(genre)) {
                     return false;
                 }

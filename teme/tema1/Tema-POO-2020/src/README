@@ -1,6 +1,56 @@
 Maria Moșneag 323CA
 
-Command - Rating
-	Ratingurile date de fiecare utilizator sunt reținute sub forma unei liste
-de string-uri în care fiecare string este de forma: titluX, unde X este numarul
-sezonului în cazul serialelor, respectiv 0, în cazul filmelor.
+	Clasa principală a organizării informației este clasa MofifiableDB care
+conține input-ul original (nemodificabil), obiectele necesare scrierii
+output-ului în fișierul de ieșire și câmpuri care conțin inițial aceeași
+informație ca input, dar care sunt modificabile și pe baza acestora se va
+construi răspunsul pentru fiecare comandă în parte.
+
+	În clasa ActionStarter, parcurg lista de comenzi dată în input și, în
+funcție de tipul acesteia, pasez „responsabilitatea” unei alte clase mai
+specializate: Command, Query sau Recommendation.
+
+Command
+	Cum modificările realizate printr-o acțiune de tip Command trebuie să fie
+vizibile și după terminarea comenzii, metodele din Command acționează direct
+asupra obiectului de tip ModifiableDB original.
+
+	Favorite
+		Verific dacă show-ul a fost văzut de user și nu se află deja pe lista de
+	favorite și, dacă respectă aceste condiții, îl adaug în listă.
+
+	View
+		Istoricul unui utilizator este reținut sub forma unui map în care cheia
+	este titlul, iar valoarea este numărul de vizualizări. În cazul acestei
+	comenzi este deci necesar numai să incrementez valoarea din map.
+
+	Rating
+		Verific dacă show-ul a fost văzut și dacă nu a mai primit rating, iar,
+	dacă aceste condiții sunt respectate, adaug rating-ul la suma ratingurilor
+	primite de acel video și incrementez numărul de ratinguri. De asemenea,
+	adaug show-ul în lista de ratinguri ale user-ului.
+		Show-urile care primesc rating din partea unui utilizator sunt reținute
+	sub forma unei liste de string-uri în care fiecare element este de forma:
+	titluX, unde X este numarul sezonului în cazul serialelor, respectiv 0, în
+	cazul filmelor.
+
+	Spre deosebire de cazul comenzilor de tip Command, modificările făcute de
+Query și de Recommendation asupra bazei de date nu trebuie să rămână și după
+găsirea rezultatului dorit, astfel încât clasele Query și Recommendation își
+creează câte o nouă instanță a clasei ModifiableDB pe baza celei originale.
+
+	Atât Recommendation, cât și Query verifică tipul exact al acțiunii și pe
+baza acestuia creează o instanță a unei clase care realizează acțiunile necesare
+pentru obținerea rezultatului dorit care este scris apoi în fișierul de output.
+
+	În cazul query-urilor și al recomandărilor pe show-uri (filme și seriale),
+multe metode ajutătoare sunt implementate în clasa pe care o moștenesc (Show).
+De asemenea, pentru a putea efectua grupat în unele cazuri acțiunile asupra
+filmelor și serialelor, am folosit surprascrierea metodelor din Show.
+
+	Pentru a nu modifica clasele de input (cele din pachetul fileio) am creat
+pachetul files care conține clase ce reprezintă extensii ale claselor din
+fileio, fără ca acestea să le moștenească însă (deoarece clasele din fileio
+erau de tip final).
+
+	Github: https://github.com/mariamosn/temePOO

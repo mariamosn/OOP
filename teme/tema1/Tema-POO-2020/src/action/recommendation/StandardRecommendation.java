@@ -24,7 +24,7 @@ public class StandardRecommendation {
     private void standard() {
         User user = User.getRightUser(dataBase, action.getUsername());
         String video = null;
-        // check movies
+        // find the first unseen movie from the data base
         for (Movie mv
                 : dataBase.getMovies()) {
             if (!user.getHistory().containsKey(mv.getTitle())
@@ -33,7 +33,7 @@ public class StandardRecommendation {
                 break;
             }
         }
-        // check serials
+        // if all the movies were seen, find the first unseen serial
         if (video == null) {
             for (Serial serial
                     : dataBase.getSerials()) {
