@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserQuery {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public UserQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -22,6 +22,7 @@ public class UserQuery {
     /**
      * The method gets the result of the query
      */
+    @SuppressWarnings("unchecked")
     private void numOfRatings() {
         // sort users based on the number of videos they rated and their names
         List<User> users = dataBase.getUsers();

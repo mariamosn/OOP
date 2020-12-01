@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BestRecommendation {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public BestRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -23,6 +23,7 @@ public class BestRecommendation {
     /**
      * The method gets the result of the Best recommendation
      */
+    @SuppressWarnings("unchecked")
     private void bestUnseen() {
         // pos contains the position of a sho in the original order
         Map<Show, Integer> pos = new HashMap<>();

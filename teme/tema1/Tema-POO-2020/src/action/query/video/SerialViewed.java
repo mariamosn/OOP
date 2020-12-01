@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SerialViewed {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public SerialViewed(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -18,6 +18,7 @@ public class SerialViewed {
         viewed();
     }
 
+    @SuppressWarnings("unchecked")
     private void viewed() {
         // check filters
         Serial sw = new Serial();

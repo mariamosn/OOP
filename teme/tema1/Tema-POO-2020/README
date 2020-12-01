@@ -1,38 +1,56 @@
-Object Oriented Programming Course
-Homework - VideosDB
+Maria Moșneag 323CA
 
-November 2020
+	Clasa principală a organizării informației este clasa MofifiableDB care
+conține input-ul original (nemodificabil), obiectele necesare scrierii
+output-ului în fișierul de ieșire și câmpuri care conțin inițial aceeași
+informație ca input, dar care sunt modificabile și pe baza acestora se va
+construi răspunsul pentru fiecare comandă în parte.
 
-# Info
-https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema
+	În clasa ActionStarter, parcurg lista de comenzi dată în input și, în
+funcție de tipul acesteia, pasez „responsabilitatea” unei alte clase mai
+specializate: Command, Query sau Recommendation.
 
-# About the code
+Command
+	Cum modificările realizate printr-o acțiune de tip Command trebuie să fie
+vizibile și după terminarea comenzii, metodele din Command acționează direct
+asupra obiectului de tip ModifiableDB original.
 
-We provide the input tests, the logic that parses them and the checker that runs them.
+	Favorite
+		Verific dacă show-ul a fost văzut de user și nu se află deja pe lista de
+	favorite și, dacă respectă aceste condiții, îl adaug în listă.
 
-* test_db - contains the tests in JSON format
-* src
-   * checker - the checker's sources including the checkstyle necessary files, not to be modified
-   * fileio - classes for parsing the input files, not to be modified
-   * common, utils
-        * contain utility classes with constants and static methods
-        * you can add your own functionality in the existing classes or add new classes as well
-   * actor
-        * contains an enum for the types of awards an actor can have - do not modify it
-        * you can add here your actor related classes
-   * entertainment
-        * contains an enum for the supported video genres - do not modify it
-        * class for representing a Season of a tv show - do not modify it
-        * you can add here your entertainment related classes
+	View
+		Istoricul unui utilizator este reținut sub forma unui map în care cheia
+	este titlul, iar valoarea este numărul de vizualizări. În cazul acestei
+	comenzi este deci necesar numai să incrementez valoarea din map.
 
-We encourage you to organize your implementation in packages based on the functionality their classes offer. Try to keep
-your code modular, readable and documented.
+	Rating
+		Verific dacă show-ul a fost văzut și dacă nu a mai primit rating, iar,
+	dacă aceste condiții sunt respectate, adaug rating-ul la suma ratingurilor
+	primite de acel video și incrementez numărul de ratinguri. De asemenea,
+	adaug show-ul în lista de ratinguri ale user-ului.
+		Show-urile care primesc rating din partea unui utilizator sunt reținute
+	sub forma unei liste de string-uri în care fiecare element este de forma:
+	titluX, unde X este numarul sezonului în cazul serialelor, respectiv 0, în
+	cazul filmelor.
 
-# Testing
+	Spre deosebire de cazul comenzilor de tip Command, modificările făcute de
+Query și de Recommendation asupra bazei de date nu trebuie să rămână și după
+găsirea rezultatului dorit, astfel încât clasele Query și Recommendation își
+creează câte o nouă instanță a clasei ModifiableDB pe baza celei originale.
 
-The Main class runs the checker on your implementation. Add the entry point to your implementation in it.
+	Atât Recommendation, cât și Query verifică tipul exact al acțiunii și pe
+baza acestuia creează o instanță a unei clase care realizează acțiunile necesare
+pentru obținerea rezultatului dorit care este scris apoi în fișierul de output.
 
-Run Main to test your implementation from the IDE or from command line.
+	În cazul query-urilor și al recomandărilor pe show-uri (filme și seriale),
+multe metode ajutătoare sunt implementate în clasa pe care o moștenesc (Show).
+De asemenea, pentru a putea efectua grupat în unele cazuri acțiunile asupra
+filmelor și serialelor, am folosit surprascrierea metodelor din Show.
 
-Run the main method from Test class with the name of the input file from the command line and the result will be written
-to the out.txt file. Thus, you can compare this result with ref.
+	Pentru a nu modifica clasele de input (cele din pachetul fileio) am creat
+pachetul files care conține clase ce reprezintă extensii ale claselor din
+fileio, fără ca acestea să le moștenească însă (deoarece clasele din fileio
+erau de tip final).
+
+	Github: https://github.com/mariamosn/temePOO

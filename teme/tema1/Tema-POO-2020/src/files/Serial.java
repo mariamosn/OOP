@@ -9,7 +9,7 @@ public class Serial extends Show {
     /**
      * Number of seasons
      */
-    private int numberOfSeasons;
+    private final int numberOfSeasons;
     /**
      * Season list
      */
@@ -49,7 +49,7 @@ public class Serial extends Show {
                 : seasons) {
             sum += season.getRating();
         }
-        return sum / seasons.size();
+        return (double) sum / seasons.size();
     }
     /**
      * Returns the total duration of the current serial, based on its seasons

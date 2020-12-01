@@ -4,8 +4,8 @@ import fileio.ActionInputData;
 import files.ModifiableDB;
 
 public class ActorQuery {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
     public ActorQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
         this.action = action;

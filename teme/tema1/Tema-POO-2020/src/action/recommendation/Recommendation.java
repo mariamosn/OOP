@@ -4,8 +4,8 @@ import fileio.ActionInputData;
 import files.ModifiableDB;
 
 public class Recommendation {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public Recommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = new ModifiableDB(dataBase);
@@ -18,18 +18,13 @@ public class Recommendation {
      * and dictates the next actions that need to be done.
      */
     private void recommend() {
-        if (action.getType().equals("standard")) {
-            new StandardRecommendation(dataBase, action);
-        } else if (action.getType().equals("best_unseen")) {
-            new BestRecommendation(dataBase, action);
-        } else if (action.getType().equals("popular")) {
-            new PopularRecommendation(dataBase, action);
-        } else if (action.getType().equals("favorite")) {
-            new FavoriteRecommendation(dataBase, action);
-        } else if (action.getType().equals("search")) {
-            new SearchRecommendation(dataBase, action);
-        } else {
-            System.out.println("Invalid type of recommendation!");
+        switch (action.getType()) {
+            case "standard" -> new StandardRecommendation(dataBase, action);
+            case "best_unseen" -> new BestRecommendation(dataBase, action);
+            case "popular" -> new PopularRecommendation(dataBase, action);
+            case "favorite" -> new FavoriteRecommendation(dataBase, action);
+            case "search" -> new SearchRecommendation(dataBase, action);
+            default -> System.out.println("Invalid type of recommendation!");
         }
     }
 }

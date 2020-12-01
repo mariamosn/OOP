@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MovieViewed {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public MovieViewed(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -18,6 +18,7 @@ public class MovieViewed {
         viewed();
     }
 
+    @SuppressWarnings("unchecked")
     private void viewed() {
         // check filters
         Movie mv = new Movie();

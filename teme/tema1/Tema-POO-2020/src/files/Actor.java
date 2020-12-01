@@ -12,19 +12,19 @@ public class Actor {
     /**
      * actor name
      */
-    private String name;
+    private final String name;
     /**
      * description of the actor's career
      */
-    private String careerDescription;
+    private final String careerDescription;
     /**
      * videos starring actor
      */
-    private ArrayList<String> filmography;
+    private final ArrayList<String> filmography;
     /**
      * awards won by the actor
      */
-    private Map<ActorsAwards, Integer> awards;
+    private final Map<ActorsAwards, Integer> awards;
     private double average;
     private int awardsCnt = 0;
 
@@ -88,7 +88,4 @@ public class Actor {
     public void setAwardsCnt(final int awardsCnt) {
         this.awardsCnt = awardsCnt;
     }
-    /**
-     * The method transforms the Actor into a String
-     */
 }

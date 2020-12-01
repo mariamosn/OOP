@@ -9,7 +9,7 @@ import files.ModifiableDB;
 import org.json.simple.JSONArray;
 
 public class ActionStarter {
-    private ModifiableDB dataBase;
+    private final ModifiableDB dataBase;
     public ActionStarter(final Input input, final Writer fileWriter, final JSONArray arrayResult) {
         dataBase = new ModifiableDB(input, fileWriter, arrayResult);
         for (int i = 0; i < input.getCommands().size(); i++) {
@@ -24,14 +24,11 @@ public class ActionStarter {
      * @param action contains information about the current action type
      */
     private void actionCaller(final ActionInputData action) {
-        if (action.getActionType().equals("command")) {
-            new Command(dataBase, action);
-        } else if (action.getActionType().equals("query")) {
-            new Query(dataBase, action);
-        } else if (action.getActionType().equals("recommendation")) {
-            new Recommendation(dataBase, action);
-        } else {
-            System.out.println("Invalid type of action!");
+        switch (action.getActionType()) {
+            case "command" -> new Command(dataBase, action);
+            case "query" -> new Query(dataBase, action);
+            case "recommendation" -> new Recommendation(dataBase, action);
+            default -> System.out.println("Invalid type of action!");
         }
     }
 }

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActorAverage {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public ActorAverage(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -24,6 +24,7 @@ public class ActorAverage {
     /**
      * Method that gets the result of the Average query
      */
+    @SuppressWarnings("unchecked")
     private void average() {
         calculateAverage();
 

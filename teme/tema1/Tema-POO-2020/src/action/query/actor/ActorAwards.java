@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActorAwards {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public ActorAwards(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -24,6 +24,7 @@ public class ActorAwards {
     /**
      * The method gets the result of the Awards query
      */
+    @SuppressWarnings("unchecked")
     private void awards() {
         // get the list of the wanted awards
         int filterNum = Utils.getFilterNum("awards");

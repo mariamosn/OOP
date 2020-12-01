@@ -13,8 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ActorFilter {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public ActorFilter(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -25,6 +25,7 @@ public class ActorFilter {
     /**
      * The method gets the result of the Filter query.
      */
+    @SuppressWarnings("unchecked")
     private void filter() {
         // get the list of wanted words
         int ind = Utils.getFilterNum("words");

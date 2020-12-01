@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SerialRating {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public SerialRating(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -25,6 +25,12 @@ public class SerialRating {
         ArrayList<Show> suitableSerials = s.checkFilters(dataBase, action);
 
         // sort serials based on ratings
+        output(suitableSerials, action, dataBase);
+    }
+
+    @SuppressWarnings("unchecked")
+    static void output(final ArrayList<Show> suitableSerials, final ActionInputData action,
+                       final ModifiableDB dataBase) {
         Show.sortBasedOnRating(suitableSerials, action.getSortType());
 
         ArrayList<String> queryRes = new ArrayList<>();

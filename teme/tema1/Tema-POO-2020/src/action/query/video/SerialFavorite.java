@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SerialFavorite {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public SerialFavorite(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -18,6 +18,7 @@ public class SerialFavorite {
         favorite();
     }
 
+    @SuppressWarnings("unchecked")
     private void favorite() {
         // check filters
         Serial s = new Serial();

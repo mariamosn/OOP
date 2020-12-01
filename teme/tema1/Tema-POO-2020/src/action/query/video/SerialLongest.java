@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SerialLongest {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public SerialLongest(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -27,6 +27,12 @@ public class SerialLongest {
         // sort movies based on duration and title
         Show.sortBasedOnDuration(suitableMovies, action.getSortType());
 
+        output(suitableMovies, action, dataBase);
+    }
+
+    @SuppressWarnings("unchecked")
+    static void output(final ArrayList<Show> suitableMovies, final ActionInputData action,
+                       final ModifiableDB dataBase) {
         ArrayList<String> queryRes = new ArrayList<>();
         for (int i = 0; i < suitableMovies.size() && queryRes.size() < action.getNumber(); i++) {
             queryRes.add(suitableMovies.get(i).getTitle());

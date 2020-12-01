@@ -14,7 +14,7 @@ public class ModifiableDB {
     /**
      * the original input
      */
-    private Input input;
+    private final Input input;
     private Writer fileWriter;
     private JSONArray arrayResult;
     /**
@@ -57,10 +57,10 @@ public class ModifiableDB {
         this.input = original.input;
         this.fileWriter = original.fileWriter;
         this.arrayResult = original.arrayResult;
-        actorsData = new ArrayList<Actor>(original.actorsData);
-        usersData = new ArrayList<User>(original.usersData);
-        moviesData = new ArrayList<Movie>(original.moviesData);
-        serialsData = new ArrayList<Serial>(original.serialsData);
+        actorsData = new ArrayList<>(original.actorsData);
+        usersData = new ArrayList<>(original.usersData);
+        moviesData = new ArrayList<>(original.moviesData);
+        serialsData = new ArrayList<>(original.serialsData);
     }
 
     /**
@@ -109,7 +109,7 @@ public class ModifiableDB {
      * Used in the constructor to set the list of actors
      */
     private void actors() {
-        actorsData = new ArrayList<Actor>();
+        actorsData = new ArrayList<>();
         for (ActorInputData actor
                 : input.getActors()) {
             actorsData.add(new Actor(actor));
@@ -119,7 +119,7 @@ public class ModifiableDB {
      * Used in the constructor to set the list of users
      */
     private void users() {
-        usersData = new ArrayList<User>();
+        usersData = new ArrayList<>();
         for (UserInputData user
                 : input.getUsers()) {
             usersData.add(new User(user));
@@ -129,7 +129,7 @@ public class ModifiableDB {
      * Used in the constructor to set the list of movies
      */
     private void movies() {
-        moviesData = new ArrayList<Movie>();
+        moviesData = new ArrayList<>();
         for (MovieInputData movie
                 : input.getMovies()) {
             moviesData.add(new Movie(movie));
@@ -139,7 +139,7 @@ public class ModifiableDB {
      * Used in the constructor to set the list of serials
      */
     private void serials() {
-        serialsData = new ArrayList<Serial>();
+        serialsData = new ArrayList<>();
         for (SerialInputData serial
                 : input.getSerials()) {
             serialsData.add(new Serial(serial));

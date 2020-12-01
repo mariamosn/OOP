@@ -9,8 +9,8 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 
 public class StandardRecommendation {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public StandardRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -21,6 +21,7 @@ public class StandardRecommendation {
     /**
      * The method gets the result of the Standard recommendation.
      */
+    @SuppressWarnings("unchecked")
     private void standard() {
         User user = User.getRightUser(dataBase, action.getUsername());
         String video = null;

@@ -2,7 +2,6 @@ package utils;
 
 import actor.ActorsAwards;
 import common.Constants;
-import entertainment.Genre;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,37 +19,6 @@ public final class Utils {
      * for coding style
      */
     private Utils() {
-    }
-
-    /**
-     * Transforms a string into an enum
-     * @param genre of video
-     * @return an Genre Enum
-     */
-    public static Genre stringToGenre(final String genre) {
-        return switch (genre.toLowerCase()) {
-            case "action" -> Genre.ACTION;
-            case "adventure" -> Genre.ADVENTURE;
-            case "drama" -> Genre.DRAMA;
-            case "comedy" -> Genre.COMEDY;
-            case "crime" -> Genre.CRIME;
-            case "romance" -> Genre.ROMANCE;
-            case "war" -> Genre.WAR;
-            case "history" -> Genre.HISTORY;
-            case "thriller" -> Genre.THRILLER;
-            case "mystery" -> Genre.MYSTERY;
-            case "family" -> Genre.FAMILY;
-            case "horror" -> Genre.HORROR;
-            case "fantasy" -> Genre.FANTASY;
-            case "science fiction" -> Genre.SCIENCE_FICTION;
-            case "action & adventure" -> Genre.ACTION_ADVENTURE;
-            case "sci-fi & fantasy" -> Genre.SCI_FI_FANTASY;
-            case "animation" -> Genre.ANIMATION;
-            case "kids" -> Genre.KIDS;
-            case "western" -> Genre.WESTERN;
-            case "tv movie" -> Genre.TV_MOVIE;
-            default -> null;
-        };
     }
 
     /**
@@ -131,14 +99,11 @@ public final class Utils {
      */
     public static int getFilterNum(final String filter) {
         final int yearCode = 0, genreCode = 1, wordsCode = 2, awardsCode = 3;
-        if (filter.equals("year")) {
-            return yearCode;
-        } else if (filter.equals("genre")) {
-            return genreCode;
-        } else if (filter.equals("words")) {
-            return wordsCode;
-        } else {
-            return awardsCode;
-        }
+        return switch (filter) {
+            case "year" -> yearCode;
+            case "genre" -> genreCode;
+            case "words" -> wordsCode;
+            default -> awardsCode;
+        };
     }
 }

@@ -149,10 +149,10 @@ public abstract class Show {
      */
     public boolean check(final Show video, final ActionInputData action) {
         // check the year
-        Integer yr = video.getYear();
+        int yr = video.getYear();
         int filter = Utils.getFilterNum("year");
         if (action.getFilters().get(filter).get(0) != null
-                && action.getFilters().get(filter).get(0).compareTo(yr.toString()) != 0) {
+                && action.getFilters().get(filter).get(0).compareTo(Integer.toString(yr)) != 0) {
             return false;
         }
 

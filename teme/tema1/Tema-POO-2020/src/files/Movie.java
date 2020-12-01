@@ -11,7 +11,7 @@ public class Movie extends Show {
     /**
      * Duration in minutes of the movie
      */
-    private int duration;
+    private final int duration;
     private double sumOfRatings;
     private int numberOfRatings;
 

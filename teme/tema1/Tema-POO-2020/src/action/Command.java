@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Command {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
-    private User user;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
+    private final User user;
 
     protected Command(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -28,33 +28,22 @@ public class Command {
      * and dictates the next method to be executed.
      */
     private void commandSolver() {
-        if (action.getType().equals("favorite")) {
-            commandFavorite();
-        } else if (action.getType().equals("view")) {
-            commandView();
-        } else if (action.getType().equals("rating")) {
-            commandRating();
-        } else {
-            System.out.println("Invalid type of command!");
+        switch (action.getType()) {
+            case "favorite" -> commandFavorite();
+            case "view" -> commandView();
+            case "rating" -> commandRating();
+            default -> System.out.println("Invalid type of command!");
         }
     }
 
     /**
      * Method that adds a video to the favorite list of an user
      */
-    private int commandFavorite() {
+    @SuppressWarnings("unchecked")
+    private void commandFavorite() {
         // check if the movie has been seen
-        if (!user.getHistory().containsKey(action.getTitle())
-                || user.getHistory().get(action.getTitle()) == 0) {
-            try {
-                JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
-                        "error -> " + action.getTitle() + " is not seen");
-                dataBase.getArrayResult().add(out);
-                return -1;
-            } catch (IOException e) {
-                System.out.println("IOException");
-                return -1;
-            }
+        if (checkHistory()) {
+            return;
         }
 
         // check if the movie isn't already a favorite
@@ -65,10 +54,10 @@ public class Command {
                     JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
                             "error -> " + action.getTitle() + " is already in favourite list");
                     dataBase.getArrayResult().add(out);
-                    return -1;
+                    return;
                 } catch (IOException e) {
                     System.out.println("IOException");
-                    return -1;
+                    return;
                 }
             }
         }
@@ -82,15 +71,14 @@ public class Command {
             dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
-            return -1;
         }
-        return 0;
     }
 
     /**
      * Method that adds a view to a video
      */
-    private int commandView() {
+    @SuppressWarnings("unchecked")
+    private void commandView() {
         int cnt;
         if (user.getHistory().containsKey(action.getTitle())) {
             cnt = user.getHistory().get(action.getTitle()) + 1;
@@ -105,27 +93,17 @@ public class Command {
             dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
-            return -1;
         }
-        return 0;
     }
 
     /**
      * Method that adds a rating to video
      */
-    private int commandRating() {
+    @SuppressWarnings("unchecked")
+    private void commandRating() {
         // check if the video is seen
-        if (!user.getHistory().containsKey(action.getTitle())
-                || user.getHistory().get(action.getTitle()) == 0) {
-            try {
-                JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
-                        "error -> " + action.getTitle() + " is not seen");
-                dataBase.getArrayResult().add(out);
-                return -1;
-            } catch (IOException e) {
-                System.out.println("IOException");
-                return -1;
-            }
+        if (checkHistory()) {
+            return;
         }
 
         // check if the user didn't already rate the video
@@ -141,9 +119,9 @@ public class Command {
                         dataBase.getArrayResult().add(out);
                     } catch (IOException e) {
                         System.out.println("IOException");
-                        return -1;
+                        return;
                     }
-                    return -1;
+                    return;
                 }
             }
         }
@@ -163,7 +141,7 @@ public class Command {
             }
             if (crt == null) {
                 System.out.println("Invalid movie!");
-                return -1;
+                return;
             }
 
             crt.setSumOfRatings(crt.getSumOfRatings() + action.getGrade());
@@ -180,10 +158,11 @@ public class Command {
                     break;
                 }
             }
+            assert serial != null;
             ArrayList<Season> seasons = serial.getSeasons();
             if (seasons.size() + 1 <= ssn) {
                 System.out.println("Invalid season!");
-                return -1;
+                return;
             } else {
                 Season season = seasons.get(ssn - 1);
                 season.setNumberOfRatings(season.getNumberOfRatings() + 1);
@@ -195,8 +174,8 @@ public class Command {
         }
 
         StringBuilder str = new StringBuilder(action.getTitle());
-        Integer num = action.getSeasonNumber();
-        str.append(num.toString());
+        int num = action.getSeasonNumber();
+        str.append(num);
         user.getRated().add(str.toString());
 
         try {
@@ -206,8 +185,23 @@ public class Command {
             dataBase.getArrayResult().add(out);
         } catch (IOException e) {
             System.out.println("IOException");
-            return -1;
         }
-        return 0;
+    }
+
+    @SuppressWarnings("unchecked")
+    private boolean checkHistory() {
+        if (!user.getHistory().containsKey(action.getTitle())
+                || user.getHistory().get(action.getTitle()) == 0) {
+            try {
+                JSONObject out = dataBase.getFileWriter().writeFile(action.getActionId(), "",
+                        "error -> " + action.getTitle() + " is not seen");
+                dataBase.getArrayResult().add(out);
+                return true;
+            } catch (IOException e) {
+                System.out.println("IOException");
+                return true;
+            }
+        }
+        return false;
     }
 }

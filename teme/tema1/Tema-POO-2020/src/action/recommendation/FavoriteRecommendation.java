@@ -2,7 +2,6 @@ package action.recommendation;
 
 import fileio.ActionInputData;
 import files.ModifiableDB;
-import files.Serial;
 import files.Show;
 import files.User;
 import org.json.simple.JSONObject;
@@ -10,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FavoriteRecommendation {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public FavoriteRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -22,6 +21,7 @@ public class FavoriteRecommendation {
     /**
      * The method gets the result of the Favorite recommendation.
      */
+    @SuppressWarnings("unchecked")
     private void favorite() {
         String found = null;
         User user = User.getRightUser(dataBase, action.getUsername());
@@ -29,10 +29,7 @@ public class FavoriteRecommendation {
         if (user.getSubscriptionType().equals("PREMIUM")) {
             // videos will contain all the shows (both movies and serials)
             ArrayList<Show> videos = new ArrayList<>(dataBase.getMovies());
-            for (Serial s
-                    : dataBase.getSerials()) {
-                videos.add(s);
-            }
+            videos.addAll(dataBase.getSerials());
 
             Show.calculateFavCnt(videos, dataBase);
 

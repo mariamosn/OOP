@@ -2,7 +2,6 @@ package action.recommendation;
 
 import fileio.ActionInputData;
 import files.ModifiableDB;
-import files.Serial;
 import files.Show;
 import files.User;
 import org.json.simple.JSONObject;
@@ -12,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PopularRecommendation {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public PopularRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -24,6 +23,7 @@ public class PopularRecommendation {
     /**
      * The method gets the result of the popular recommendation.
      */
+    @SuppressWarnings("unchecked")
     private void popular() {
         String found = null;
         User user = User.getRightUser(dataBase, action.getUsername());
@@ -31,10 +31,7 @@ public class PopularRecommendation {
         if (user.getSubscriptionType().equals("PREMIUM")) {
             // videos will contain all shows (movies and serials)
             ArrayList<Show> videos = new ArrayList<>(dataBase.getMovies());
-            for (Serial s
-                    : dataBase.getSerials()) {
-                videos.add(s);
-            }
+            videos.addAll(dataBase.getSerials());
 
             ArrayList<String> popular = getMostPopularGen(videos);
 
@@ -89,11 +86,7 @@ public class PopularRecommendation {
         }
 
         // create a list with all the genres
-        ArrayList<String> genList = new ArrayList<>();
-        for (String str
-                : genres.keySet()) {
-            genList.add(str);
-        }
+        ArrayList<String> genList = new ArrayList<>(genres.keySet());
 
         // sort the genres list based on popularity (total number of views)
         for (int i = 0; i < genList.size() - 1; i++) {

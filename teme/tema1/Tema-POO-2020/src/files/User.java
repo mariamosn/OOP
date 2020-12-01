@@ -13,23 +13,23 @@ public class User {
     /**
      * User's username
      */
-    private String username;
+    private final String username;
     /**
      * Subscription Type
      */
-    private String subscriptionType;
+    private final String subscriptionType;
     /**
      * The history of the movies seen
      */
-    private Map<String, Integer> history;
+    private final Map<String, Integer> history;
     /**
      * Movies added to favorites
      */
-    private ArrayList<String> favoriteMovies;
+    private final ArrayList<String> favoriteMovies;
     /**
      * Number of ratings
      */
-    private ArrayList<String> rated = new ArrayList<>();
+    private final ArrayList<String> rated = new ArrayList<>();
 
     public User(final String username, final String subscriptionType,
                 final Map<String, Integer> history,

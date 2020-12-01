@@ -2,7 +2,6 @@ package action.recommendation;
 
 import fileio.ActionInputData;
 import files.ModifiableDB;
-import files.Serial;
 import files.Show;
 import files.User;
 import org.json.simple.JSONObject;
@@ -10,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SearchRecommendation {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public SearchRecommendation(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -22,6 +21,7 @@ public class SearchRecommendation {
     /**
      * The method gets the result of the Search recommendation.
      */
+    @SuppressWarnings("unchecked")
     private void search() {
         ArrayList<String> result = new ArrayList<>();
         User user = User.getRightUser(dataBase, action.getUsername());
@@ -29,10 +29,7 @@ public class SearchRecommendation {
         if (user.getSubscriptionType().equals("PREMIUM")) {
             // videos will contain all the shows (movies and serials)
             ArrayList<Show> videos = new ArrayList<>(dataBase.getMovies());
-            for (Serial s
-                    : dataBase.getSerials()) {
-                videos.add(s);
-            }
+            videos.addAll(dataBase.getSerials());
 
             // check filters and if the video is unseen
             ArrayList<Show> suitable = new ArrayList<>();

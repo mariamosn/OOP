@@ -4,8 +4,8 @@ import fileio.ActionInputData;
 import files.ModifiableDB;
 
 public class MovieQuery {
-    private ModifiableDB dataBase;
-    private ActionInputData action;
+    private final ModifiableDB dataBase;
+    private final ActionInputData action;
 
     public MovieQuery(final ModifiableDB dataBase, final ActionInputData action) {
         this.dataBase = dataBase;
@@ -14,16 +14,12 @@ public class MovieQuery {
     }
 
     private void delegate() {
-        if (action.getCriteria().equals("ratings")) {
-            new MovieRatings(dataBase, action);
-        } else if (action.getCriteria().equals("favorite")) {
-            new MovieFavorite(dataBase, action);
-        } else if (action.getCriteria().equals("longest")) {
-            new MovieLongest(dataBase, action);
-        } else if (action.getCriteria().equals("most_viewed")) {
-            new MovieViewed(dataBase, action);
-        } else {
-            System.out.println("Invalid criteria!");
+        switch (action.getCriteria()) {
+            case "ratings" -> new MovieRatings(dataBase, action);
+            case "favorite" -> new MovieFavorite(dataBase, action);
+            case "longest" -> new MovieLongest(dataBase, action);
+            case "most_viewed" -> new MovieViewed(dataBase, action);
+            default -> System.out.println("Invalid criteria!");
         }
     }
 }
