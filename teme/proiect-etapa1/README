@@ -1,0 +1,48 @@
+Maria Moșneag 323CA
+
+	Input:
+	Pentru parsarea informației primite în fișierul .json am folosit clasele din
+pachetul input:
+		Input - clasa de bază care stochează toată informația primită,
+				folosindu-se de celelalte clase din pachet
+		Data  - conține listele inițiale cu consumatori (ConsumerInput) și
+				distribuitori (DistributorInput)
+		MonthlyUpdates - conține listele cu noi clienți și schimbări de cost
+
+	Informația primită prin input este apoi introdusă în „baza de date” care
+este implementată folosind Singleton Pattern pentru a putea fi ușor accesibilă
+în cadrul programului.
+	DataBase - clasa care implementează Singleton Pattern
+			 - conține informații despre numărul de runde, consumatori,
+			   distribuitori și actualizările lunare ce urmează să fie făcute
+			 - folosește clase din pachetele entity, consumer și distributor
+
+	Având câteva proprietăți comune, am ales să creez clasele care conțin date
+despre consumator (Consumer) și distribuitor (Distributor) ca moștenitoare ale
+unei clase abstracte, Entity.
+	Astfel, am putut să folosesc și Factory Pattern pentru a facilita crearea
+instanțelor claselor Consumer și Distributor, la baza implementării acestui
+design pattern stând clasa EntityFactory.
+
+	Logica simulării interacțiunilor consumator - distributor pe parcurusul unei
+luni se află în clasa MonthlyAction din pachetul entity. Aceasta are o metodă
+statică publică, monthAction, care realizează, folosindu-se de alte metode
+private ale clasei, toate acțiunile lunare:
+		- face actualizările pe baza input-ului (prin metoda makeUpdates)
+		- calculează prețurile noilor oferte de contract ale distribuitorilor
+		  și determină cea mai bună ofertă
+		- elimină contractele expirate (prin metoda freeOldContracts)
+		- găsește contracte noi pentru clienții care nu au o sursă de energie
+		  (prin metoda getNewContracts)
+		- realizează plățile specifice distribuitorilor (prin metoda
+		  distributorPayments)
+		- realizează plățile contractelor specifice consumatorilor (prin metoda
+		  payCurrentContracts)
+		- verifică dacă mai există distribuitori care să nu fie în faliment
+		  (prin metoda checkDistributors)
+
+	Output:
+	După terminarea simulării, folosesc clasele din pachetul output pentru a
+crea un obiect care să înglobeze rezultatele obținute (instanță a clasei
+Output), scriu informația în fișierul .json de ieșire și șterg datele din
+instanța DataBase pentru ca acestea să nu afecteze următoarele simulări.
