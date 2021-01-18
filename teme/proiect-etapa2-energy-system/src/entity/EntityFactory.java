@@ -34,13 +34,11 @@ public final class EntityFactory {
      * @return - the new entity
      */
     public Entity createEntity(final String type, final Object input) {
-        if (type.equals("consumer")) {
-            return new Consumer((ConsumerInput) input);
-        } else if (type.equals("distributor")) {
-            return new Distributor((DistributorInput) input);
-        } else if (type.equals("producer")) {
-            return new Producer((ProducerInput) input);
-        }
-        return null;
+        return switch (type) {
+            case "consumer" -> new Consumer((ConsumerInput) input);
+            case "distributor" -> new Distributor((DistributorInput) input);
+            case "producer" -> new Producer((ProducerInput) input);
+            default -> null;
+        };
     }
 }

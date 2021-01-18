@@ -3,6 +3,7 @@ package distributor;
 import java.util.Observable;
 import java.util.Observer;
 
+@SuppressWarnings("deprecation")
 public final class ProducerUpdate implements Observer {
     private boolean isUpdated;
 

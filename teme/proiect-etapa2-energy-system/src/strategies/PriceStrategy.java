@@ -25,16 +25,6 @@ public final class PriceStrategy implements ProducerChooser {
             }
         }
 
-        int quantity = 0;
-        ArrayList<Producer> chosen = new ArrayList<>();
-        for (int i = 0; i < prod.size() && quantity < distr.getEnergyNeededKW(); i++) {
-            int currentDistributors = prod.get(i).getEnergy().getDistributors().size();
-            if (currentDistributors < prod.get(i).getMaxDistributors()) {
-                chosen.add(prod.get(i));
-                quantity += prod.get(i).getEnergy().getEnergyPerDistributor();
-            }
-        }
-
-        return chosen;
+        return QuantityAssurance.selectProducers(distr, prod);
     }
 }

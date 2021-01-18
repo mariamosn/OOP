@@ -11,6 +11,7 @@ import output.MonthlyStatOutput;
 import producer.Producer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public final class MonthlyAction {
@@ -292,9 +293,11 @@ public final class MonthlyAction {
     private void removePrevProducers(Distributor distributor) {
         for (Producer prod
                 : distributor.getCurrentProducers()) {
-            for (int i = 0; i < prod.getEnergy().getDistributors().size(); i++) {
-                if (prod.getEnergy().getDistributors().get(i) == distributor) {
-                    prod.getEnergy().getDistributors().remove(i);
+            Iterator<Distributor> iterator = prod.getEnergy().getDistributors().iterator();
+            while (iterator.hasNext()) {
+                Distributor currentDistr = iterator.next();
+                if (currentDistr == distributor) {
+                    iterator.remove();
                     prod.getEnergy().deleteObserver(distributor.getFlag());
                 }
             }
@@ -319,6 +322,7 @@ public final class MonthlyAction {
         for (ProducerChange change
                 : updates.getProducerChanges()) {
             Producer producer = db.getProducer(change.getId());
+            assert producer != null;
             producer.getEnergy().setEnergyPerDistributor(change.getEnergyPerDistributor());
         }
     }

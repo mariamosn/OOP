@@ -13,7 +13,7 @@ public final class Producer extends Entity {
     private int maxDistributors;
     private double priceKW;
     private Energy energy;
-    private List<MonthlyStatOutput> monthlyStats;
+    private final List<MonthlyStatOutput> monthlyStats;
 
     public Producer(final ProducerInput producerInput) {
         super(producerInput.getId());

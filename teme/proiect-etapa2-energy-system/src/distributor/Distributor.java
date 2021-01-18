@@ -19,8 +19,8 @@ public final class Distributor extends Entity {
     private List<Producer> currentProducers;
     private int energyNeededKW;
     private strategies.EnergyChoiceStrategyType producerStrategy;
-    private ProducerChooser strategy;
-    private ProducerUpdate flag;
+    private final ProducerChooser strategy;
+    private final ProducerUpdate flag;
     private int currentContractCost;
 
     public Distributor(final DistributorInput distributorInput) {

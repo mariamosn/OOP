@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+@SuppressWarnings("deprecation")
 public final class Energy extends Observable {
     private int energyPerDistributor;
-    private List<Distributor> distributors;
+    private final List<Distributor> distributors;
 
     public Energy(int energyPerDistributor) {
         this.energyPerDistributor = energyPerDistributor;
