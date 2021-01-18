@@ -10,7 +10,7 @@ import strategies.StrategyFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Distributor extends Entity {
+public final class Distributor extends Entity {
     public static final double PROFIT_PERCENT = 0.2;
     private int contractLength;
     private int infrastructureCost;
@@ -31,7 +31,7 @@ public class Distributor extends Entity {
         this.energyNeededKW = distributorInput.getEnergyNeededKW();
         this.producerStrategy = distributorInput.getProducerStrategy();
         this.contracts = new ArrayList<>();
-        this. currentProducers = new ArrayList<>();
+        this.currentProducers = new ArrayList<>();
         this.strategy = StrategyFactory.createStrategy(producerStrategy);
         this.flag = new ProducerUpdate();
     }

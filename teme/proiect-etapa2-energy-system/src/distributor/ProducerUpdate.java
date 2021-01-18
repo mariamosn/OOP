@@ -3,7 +3,7 @@ package distributor;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ProducerUpdate implements Observer {
+public final class ProducerUpdate implements Observer {
     private boolean isUpdated;
 
     public ProducerUpdate() {
@@ -19,6 +19,9 @@ public class ProducerUpdate implements Observer {
         return isUpdated;
     }
 
+    /**
+     * The method resets the isUpdated flag.
+     */
     public void reset() {
         this.isUpdated = false;
     }

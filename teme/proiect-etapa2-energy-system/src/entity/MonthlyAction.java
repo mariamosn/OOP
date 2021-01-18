@@ -16,6 +16,7 @@ import java.util.List;
 public final class MonthlyAction {
     private final DataBase db = DataBase.getInstance();
     private static final double PENALTY = 1.2;
+    private static final int PRODUCTION_DIVIDER = 10;
 
     /**
      * The method contains all the actions that need to be done in a month
@@ -84,7 +85,8 @@ public final class MonthlyAction {
         List<Consumer> consumers = db.getConsumers();
         for (ConsumerInput consumer
                 : newConsumers) {
-            consumers.add((Consumer) EntityFactory.createEntity("consumer", consumer));
+            Entity newCons = EntityFactory.getInstance().createEntity("consumer", consumer);
+            consumers.add((Consumer) newCons);
         }
         db.setConsumers(consumers);
 
@@ -95,7 +97,6 @@ public final class MonthlyAction {
             Distributor distributor = db.getDistributor(change.getId());
             assert distributor != null;
             distributor.setInfrastructureCost(change.getInfrastructureCost());
-            // distributor.setProductionCost(change.getProductionCost());
         }
     }
 
@@ -199,7 +200,8 @@ public final class MonthlyAction {
                     } else {
                         int toPay = (int) Math.round(Math.floor(PENALTY * consumer.getLeftToPay()))
                                 + contract.getPrice();
-                        int partialPay = (int) Math.round(Math.floor(PENALTY * consumer.getLeftToPay()));
+                        int partialPay = (int) Math.round(Math.floor(PENALTY
+                                            * consumer.getLeftToPay()));
 
                         // the consumer isn't up to date with the payments, but can affords to pay
                         if (toPay <= budget) {
@@ -211,7 +213,8 @@ public final class MonthlyAction {
                             distributor.setBudget(contract.getPrice());
 
                         // the consumer can only afford to pay the old contract
-                        } else if (partialPay <= budget && distributor != consumer.getDistributorLeftToPay()) {
+                        } else if (partialPay <= budget
+                                    && distributor != consumer.getDistributorLeftToPay()) {
                             budget -= partialPay;
                             consumer.setLeftToPay(contract.getPrice());
                             Distributor restantDistr = consumer.getDistributorLeftToPay();
@@ -306,7 +309,7 @@ public final class MonthlyAction {
                     : distributor.getCurrentProducers()) {
                 cost += producer.getEnergy().getEnergyPerDistributor() * producer.getPriceKW();
             }
-            int productionCost = (int) Math.round(Math.floor(cost / 10));
+            int productionCost = (int) Math.round(Math.floor(cost / PRODUCTION_DIVIDER));
             distributor.setProductionCost(productionCost);
         }
     }

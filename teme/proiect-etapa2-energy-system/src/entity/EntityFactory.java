@@ -11,7 +11,20 @@ import producer.Producer;
  * The class is used to implement the Factory pattern
  */
 public final class EntityFactory {
+    private static EntityFactory instance = null;
+
     private EntityFactory() {
+    }
+
+    /**
+     * Getter for the instance of the Singleton
+     * @return - the Singleton instance
+     */
+    public static EntityFactory getInstance() {
+        if (instance == null) {
+            instance = new EntityFactory();
+        }
+        return instance;
     }
 
     /**
@@ -20,7 +33,7 @@ public final class EntityFactory {
      * @param input - the original input object based on which the new entity will be created
      * @return - the new entity
      */
-    public static Entity createEntity(final String type, final Object input) {
+    public Entity createEntity(final String type, final Object input) {
         if (type.equals("consumer")) {
             return new Consumer((ConsumerInput) input);
         } else if (type.equals("distributor")) {

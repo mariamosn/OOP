@@ -2,7 +2,7 @@ package input;
 
 import entities.EnergyType;
 
-public class ProducerInput {
+public final class ProducerInput {
     private int id;
     private entities.EnergyType energyType;
     private int maxDistributors;

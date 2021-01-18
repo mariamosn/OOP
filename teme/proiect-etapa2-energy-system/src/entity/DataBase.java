@@ -2,7 +2,12 @@ package entity;
 
 import consumer.Consumer;
 import distributor.Distributor;
-import input.*;
+import input.ConsumerInput;
+import input.Data;
+import input.Input;
+import input.MonthlyUpdates;
+import input.DistributorInput;
+import input.ProducerInput;
 import producer.Producer;
 
 import java.util.ArrayList;
@@ -59,16 +64,19 @@ public final class DataBase {
         Data data = input.getInitialData();
         for (ConsumerInput consumer
                 : data.getConsumers()) {
-            this.consumers.add((Consumer) EntityFactory.createEntity("consumer", consumer));
+            Entity newCons = EntityFactory.getInstance().createEntity("consumer", consumer);
+            this.consumers.add((Consumer) newCons);
         }
         for (DistributorInput distributor
                 : data.getDistributors()) {
-            this.distributors.add((Distributor) EntityFactory.createEntity("distributor",
-                    distributor));
+            Entity newDistr = EntityFactory.getInstance().createEntity("distributor",
+                    distributor);
+            this.distributors.add((Distributor) newDistr);
         }
         for (ProducerInput producer
                 : data.getProducers()) {
-            this.producers.add((Producer) EntityFactory.createEntity("producer", producer));
+            Entity newProd = EntityFactory.getInstance().createEntity("producer", producer);
+            this.producers.add((Producer) newProd);
         }
         this.monthlyUpdates = input.getMonthlyUpdates();
     }
@@ -142,6 +150,12 @@ public final class DataBase {
     public void setProducers(List<Producer> producers) {
         this.producers = producers;
     }
+
+    /**
+     * The method searches a specific producer, based on its id.
+     * @param id - the wanted producer's id
+     * @return - the producer with the provided id or null if no such producer exists
+     */
     public Producer getProducer(final int id) {
         for (Producer producer
                 : producers) {

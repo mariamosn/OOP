@@ -2,7 +2,7 @@ package input;
 
 import java.util.List;
 
-public class MonthlyUpdates {
+public final class MonthlyUpdates {
     private List<ConsumerInput> newConsumers;
     private List<DistributorChange> distributorChanges;
     private List<ProducerChange> producerChanges;

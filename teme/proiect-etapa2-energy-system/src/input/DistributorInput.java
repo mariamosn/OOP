@@ -2,7 +2,7 @@ package input;
 
 import strategies.EnergyChoiceStrategyType;
 
-public class DistributorInput {
+public final class DistributorInput {
     private int id;
     private int contractLength;
     private int initialBudget;

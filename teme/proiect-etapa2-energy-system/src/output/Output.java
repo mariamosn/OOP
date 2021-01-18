@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonPropertyOrder({ "consumers", "distributors" })
-public class Output {
+public final class Output {
     @JsonProperty("consumers")
     private List<ConsumerOutput> consumers;
     @JsonProperty("distributors")
@@ -34,7 +34,7 @@ public class Output {
             DistributorOutput out = new DistributorOutput(distributor);
             distributors.add(out);
         }
-        
+
         energyProducers = new ArrayList<>();
         for (Producer producer
                 : dataBase.getProducers()) {

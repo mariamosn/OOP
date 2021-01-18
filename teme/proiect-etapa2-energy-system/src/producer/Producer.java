@@ -8,7 +8,7 @@ import output.MonthlyStatOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Producer extends Entity {
+public final class Producer extends Entity {
     private entities.EnergyType energyType;
     private int maxDistributors;
     private double priceKW;
@@ -62,8 +62,9 @@ public class Producer extends Entity {
 
     @Override
     public String toString() {
-        return "Producer{" +
-                "energyType=" + energyType +
-                '}';
+        return "Producer{"
+                + "energyType="
+                + energyType
+                + '}';
     }
 }

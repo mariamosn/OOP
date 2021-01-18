@@ -2,7 +2,7 @@ package output;
 
 import java.util.List;
 
-public class MonthlyStatOutput {
+public final class MonthlyStatOutput {
     private int month;
     private List<Integer> distributorsIds;
 

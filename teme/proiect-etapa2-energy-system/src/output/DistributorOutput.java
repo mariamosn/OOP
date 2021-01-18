@@ -8,8 +8,9 @@ import strategies.EnergyChoiceStrategyType;
 
 import java.util.List;
 
-@JsonPropertyOrder({ "id", "energyNeededKW", "contractCost", "budget", "producerStrategy", "isBankrupt", "contracts" })
-public class DistributorOutput {
+@JsonPropertyOrder({ "id", "energyNeededKW", "contractCost", "budget",
+                    "producerStrategy", "isBankrupt", "contracts" })
+public final class DistributorOutput {
     @JsonProperty("id")
     private int id;
 

@@ -40,10 +40,6 @@ public final class Main {
         Output output = new Output();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         ow.writeValue(new File(args[1]), output);
-        if (args[0].equals("/home/maria/t2/teme/teme/proiect-etapa2-energy-system/checker/resources/in/complex_4.json")) {
-            ow.writeValue(new File("test.out"), output);
-        }
-        // System.out.println(args[0]);
 
         // remove the information from the DataBase
         DataBase.getInstance().clean();

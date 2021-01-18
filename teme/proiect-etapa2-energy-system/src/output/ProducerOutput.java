@@ -5,7 +5,7 @@ import producer.Producer;
 
 import java.util.List;
 
-public class ProducerOutput {
+public final class ProducerOutput {
     private int id;
     private int maxDistributors;
     private double priceKW;

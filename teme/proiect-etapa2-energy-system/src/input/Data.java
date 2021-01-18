@@ -2,7 +2,7 @@ package input;
 
 import java.util.List;
 
-public class Data {
+public final class Data {
     private List<ConsumerInput> consumers;
     private List<DistributorInput> distributors;
     private List<ProducerInput> producers;

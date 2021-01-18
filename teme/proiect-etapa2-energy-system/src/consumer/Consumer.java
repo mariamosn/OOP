@@ -5,7 +5,7 @@ import distributor.Distributor;
 import entity.Entity;
 import input.ConsumerInput;
 
-public class Consumer extends Entity {
+public final class Consumer extends Entity {
     private int monthlyIncome;
     private int leftToPay;
     private Contract contract = null;
