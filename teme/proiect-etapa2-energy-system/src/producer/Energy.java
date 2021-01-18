@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+/**
+ * The instances of this class are observed by instances of the ProducerUpdate class;
+ * the observed event is represented by the modification of the energyPerDistributor field
+ */
 @SuppressWarnings("deprecation")
 public final class Energy extends Observable {
     private int energyPerDistributor;

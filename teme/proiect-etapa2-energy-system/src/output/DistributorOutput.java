@@ -13,18 +13,14 @@ import java.util.List;
 public final class DistributorOutput {
     @JsonProperty("id")
     private int id;
-
     @JsonProperty("energyNeededKW")
     private int energyNeededKW;
     @JsonProperty("contractCost")
     private int contractCost;
-
     @JsonProperty("budget")
     private int budget;
-
     @JsonProperty("producerStrategy")
     private strategies.EnergyChoiceStrategyType producerStrategy;
-
     @JsonProperty("isBankrupt")
     private final boolean isBankrupt;
     @JsonProperty("contracts")
@@ -40,16 +36,10 @@ public final class DistributorOutput {
         this.contracts = original.getContracts();
     }
 
-    /**
-     * Getter for the distributor's id
-     */
     public int getId() {
         return id;
     }
-    /**
-     * Setter for the distributor's id
-     * @param id - the distributor's id
-     */
+
     public void setId(final int id) {
         this.id = id;
     }

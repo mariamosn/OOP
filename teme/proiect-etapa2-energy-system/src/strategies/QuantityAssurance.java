@@ -14,7 +14,7 @@ public final class QuantityAssurance {
      * The method selects from the list as many producers as needed in order to meet the energy
      * requirements of the distributor.
      * @param distr - the distributor for which we need to choose producers
-     * @param prod - the sorted list (based on strategy) producers
+     * @param prod - the sorted list (depending on strategy) of producers
      * @return - a list with the new producers of the distributor
      */
     public static List<Producer> selectProducers(Distributor distr, ArrayList<Producer> prod) {

@@ -62,6 +62,11 @@ public final class ProducerOutput {
         this.energyPerDistributor = energyPerDistributor;
     }
 
+    /**
+     * Getter for the list of monthly stats regarding the
+     * distributors - producers relations
+     * @return - the list of monthly stats
+     */
     public List<MonthlyStatOutput> getMonthlyStats() {
         return monthlyStats;
     }

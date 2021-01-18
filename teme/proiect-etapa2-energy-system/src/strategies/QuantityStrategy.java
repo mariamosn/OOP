@@ -7,6 +7,10 @@ import producer.Producer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This type of strategy determines the new producers for a specific
+ * distributor based quantity
+ */
 public final class QuantityStrategy implements ProducerChooser {
     @Override
     public List<Producer> chooseProducers(Distributor distr) {
@@ -23,6 +27,7 @@ public final class QuantityStrategy implements ProducerChooser {
             }
         }
 
+        // forming the list of new producers
         return QuantityAssurance.selectProducers(distr, prod);
     }
 }

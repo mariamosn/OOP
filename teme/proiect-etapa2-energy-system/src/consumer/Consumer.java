@@ -17,16 +17,10 @@ public final class Consumer extends Entity {
         this.leftToPay = 0;
     }
 
-    /**
-     * Getter for the consumer's monthly income
-     */
     public int getMonthlyIncome() {
         return monthlyIncome;
     }
-    /**
-     * Setter for the consumer's monthly income
-     * @param monthlyIncome - the consumer's monthly income
-     */
+
     public void setMonthlyIncome(final int monthlyIncome) {
         this.monthlyIncome = monthlyIncome;
     }
@@ -46,16 +40,10 @@ public final class Consumer extends Entity {
         leftToPay = sum;
     }
 
-    /**
-     * Getter for the consumer's current contract
-     */
     public Contract getContract() {
         return contract;
     }
-    /**
-     * Setter for the consumer's current contract
-     * @param contract - the consumer's new contract
-     */
+
     public void setContract(final Contract contract) {
         this.contract = contract;
     }

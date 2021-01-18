@@ -8,7 +8,7 @@ import input.ProducerInput;
 import producer.Producer;
 
 /**
- * The class is used to implement the Factory pattern
+ * The class implements the Factory and Singleton pattern
  */
 public final class EntityFactory {
     private static EntityFactory instance = null;
@@ -29,7 +29,7 @@ public final class EntityFactory {
 
     /**
      * Creates a new entity based on the type provided
-     * @param type - the type of entity wanted (consumer or distributor)
+     * @param type - the type of entity wanted (consumer, distributor or producer)
      * @param input - the original input object based on which the new entity will be created
      * @return - the new entity
      */

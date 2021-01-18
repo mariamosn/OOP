@@ -25,11 +25,12 @@ public final class MonthlyAction {
      * @return - false if all distributors are bankrupt or true otherwise
      */
     public boolean monthAction(final int month) {
-        // make updates based on the input
+        // make updates based on the input (for consumers and distributors)
         if (month != 0) {
             makeUpdates(month);
         }
 
+        // choose initial producers and calculate de production costs for each distributor
         if (month == 0) {
             chooseProducers();
             getProductionPrices();
@@ -61,12 +62,16 @@ public final class MonthlyAction {
         payCurrentContracts();
 
         if (month != 0) {
+            // make updates basted on the input (for producers)
             updateProducers(month);
-        }
 
-        if (month != 0) {
+            // choose new producers (in case there have been updates)
             chooseProducers();
+
+            // calculate the new production costs for each distributor
             getProductionPrices();
+
+            // log the current producers - distributors relations
             producerStatUpdate(month);
         }
 
@@ -151,15 +156,14 @@ public final class MonthlyAction {
                 : db.getDistributors()) {
             if (!distributor.isBankrupt()) {
                 int budget = distributor.getBudget();
+
                 // pay the infrastructure cost
                 budget -= distributor.getInfrastructureCost();
 
                 // pay the production costs
                 if (!distributor.getContracts().isEmpty()) {
                     budget -= distributor.getContracts().size() * distributor.getProductionCost();
-                    // System.out.println(distributor.getProductionCost());
                 }
-                // budget -= distributor.getProductionCost();
 
                 // update the distributor's budget
                 distributor.setBudget(budget);
@@ -272,24 +276,38 @@ public final class MonthlyAction {
         return ok;
     }
 
+    /**
+     * The method updates the producers list of each distributor for which
+     * at least one of its previous producers had an update
+     */
     private void chooseProducers() {
         for (Distributor distributor
              : db.getDistributors()) {
-            if (distributor.getFlag().getIsUpdated()) {
+            if (distributor.getProducerUpdate().getIsUpdated()) {
+                // remove the previous producers - distributor links
                 removePrevProducers(distributor);
+
+                // select the new producers
                 List<Producer> producers = distributor.getStrategy().chooseProducers(distributor);
                 distributor.setCurrentProducers(producers);
 
+                // add the distributor to all of its producers' lists
                 for (Producer producer
                         : producers) {
                     producer.getEnergy().getDistributors().add(distributor);
-                    producer.getEnergy().addObserver(distributor.getFlag());
+                    producer.getEnergy().addObserver(distributor.getProducerUpdate());
                 }
-                distributor.getFlag().reset();
+
+                // reset the flag used to check if the distributor needs to find new producers
+                distributor.getProducerUpdate().reset();
             }
         }
     }
 
+    /**
+     * The method removes the links between a distributor and its previous producers
+     * @param distributor - the distributor for which we need to remove the links
+     */
     private void removePrevProducers(Distributor distributor) {
         for (Producer prod
                 : distributor.getCurrentProducers()) {
@@ -298,12 +316,16 @@ public final class MonthlyAction {
                 Distributor currentDistr = iterator.next();
                 if (currentDistr == distributor) {
                     iterator.remove();
-                    prod.getEnergy().deleteObserver(distributor.getFlag());
+                    prod.getEnergy().deleteObserver(distributor.getProducerUpdate());
                 }
             }
         }
     }
 
+    /**
+     * The method calculates the production prices for each distributor
+     * based on its current producers.
+     */
     private void getProductionPrices() {
         for (Distributor distributor
                 : db.getDistributors()) {
@@ -317,6 +339,11 @@ public final class MonthlyAction {
         }
     }
 
+    /**
+     * The method updates the quantity of energy provided by producers
+     * based on the input.
+     * @param month - the current month's number
+     */
     private void updateProducers(final int month) {
         MonthlyUpdates updates = db.getMonthlyUpdates().get(month - 1);
         for (ProducerChange change
@@ -327,6 +354,11 @@ public final class MonthlyAction {
         }
     }
 
+    /**
+     * The method is responsible for logging the current month's
+     * stats regarding the links between producers and distributors.
+     * @param month - the current month's number
+     */
     private void producerStatUpdate(int month) {
         for (Producer prod
                 : db.getProducers()) {
@@ -335,7 +367,6 @@ public final class MonthlyAction {
                     : prod.getEnergy().getDistributors()) {
                 distributorsIds.add(distributor.getId());
             }
-
             prod.getMonthlyStats().add(new MonthlyStatOutput(month, distributorsIds));
         }
     }

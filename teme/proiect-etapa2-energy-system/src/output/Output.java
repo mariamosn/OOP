@@ -21,6 +21,7 @@ public final class Output {
 
     public Output() {
         DataBase dataBase = DataBase.getInstance();
+
         consumers = new ArrayList<>();
         for (Consumer consumer
                 : dataBase.getConsumers()) {
@@ -49,6 +50,7 @@ public final class Output {
     public List<ConsumerOutput> getConsumers() {
         return consumers;
     }
+
     /**
      * Setter for the final list of consumers
      * @param consumers - the final list of consumers
@@ -63,6 +65,8 @@ public final class Output {
     public List<DistributorOutput> getDistributors() {
         return distributors;
     }
+
+
     /**
      * Setter for the final list of distributors
      * @param distributors - the final list of distributors
@@ -71,10 +75,17 @@ public final class Output {
         this.distributors = distributors;
     }
 
+    /**
+     * Getter for the final list of producers
+     */
     public List<ProducerOutput> getEnergyProducers() {
         return energyProducers;
     }
 
+    /**
+     * Setter for the final list of producers
+     * @param energyProducers - the final list of producers
+     */
     public void setEnergyProducers(List<ProducerOutput> energyProducers) {
         this.energyProducers = energyProducers;
     }

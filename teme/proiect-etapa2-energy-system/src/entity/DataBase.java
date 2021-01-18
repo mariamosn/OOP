@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The class uses the Singleton pattern
- * its purpose is to store information about the consumers, distributors and monthly updates
+ * The class stores information about the consumers, distributors and monthly updates
  */
 public final class DataBase {
     private static DataBase instance = null;
@@ -34,8 +33,8 @@ public final class DataBase {
     }
 
     /**
-     * Getter for the instance of the Singleton
-     * @return - the Singleton instance
+     * Getter for the instance of the DataBase
+     * @return - the instance
      */
     public static DataBase getInstance() {
         if (instance == null) {
@@ -45,8 +44,8 @@ public final class DataBase {
     }
 
     /**
-     * Method that removes all the entities from the two lists
-     * of the DataBase instance (consumers and distributors)
+     * Method that removes all the entities from the lists
+     * of the DataBase instance
      */
     public void clean() {
         this.consumers.clear();
@@ -113,6 +112,14 @@ public final class DataBase {
         this.distributors = distributors;
     }
 
+    public List<Producer> getProducers() {
+        return producers;
+    }
+
+    public void setProducers(List<Producer> producers) {
+        this.producers = producers;
+    }
+
     /**
      * The method searches in the DataBase the wanted consumer.
      * @param id - the wanted consumer's id
@@ -141,14 +148,6 @@ public final class DataBase {
             }
         }
         return null;
-    }
-
-    public List<Producer> getProducers() {
-        return producers;
-    }
-
-    public void setProducers(List<Producer> producers) {
-        this.producers = producers;
     }
 
     /**

@@ -13,6 +13,7 @@ public final class MonthlyUpdates {
     public List<ConsumerInput> getNewConsumers() {
         return newConsumers;
     }
+
     /**
      * Setter for the list of new consumers
      * @param newConsumers - the list of consumers that need to be added
@@ -21,6 +22,10 @@ public final class MonthlyUpdates {
         this.newConsumers = newConsumers;
     }
 
+    /**
+     * Getter for the list of changes regarding the distributor's infrastructure costs
+     * @return - the list of changes
+     */
     public List<DistributorChange> getDistributorChanges() {
         return distributorChanges;
     }
@@ -29,6 +34,11 @@ public final class MonthlyUpdates {
         this.distributorChanges = distributorChanges;
     }
 
+    /**
+     * Getter for the list of changes regarding the quantity of energy each
+     * distributor gets from a producer
+     * @return - the list of changes
+     */
     public List<ProducerChange> getProducerChanges() {
         return producerChanges;
     }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import consumer.Consumer;
 
 @JsonPropertyOrder({ "id", "isBankrupt", "budget" })
-public class ConsumerOutput {
+public final class ConsumerOutput {
     @JsonProperty("id")
     private int id;
     @JsonProperty("isBankrupt")
@@ -19,16 +19,10 @@ public class ConsumerOutput {
         this.budget = original.getBudget();
     }
 
-    /**
-     * Getter for the consumer's id
-     */
     public int getId() {
         return id;
     }
-    /**
-     * Setter for the consumer's id
-     * @param id - the consumer's id
-     */
+
     public void setId(final int id) {
         this.id = id;
     }
@@ -47,6 +41,7 @@ public class ConsumerOutput {
     public int getBudget() {
         return budget;
     }
+
     /**
      * Setter for the consumer's final budget
      * @param budget - the consumer's final budget
