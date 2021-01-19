@@ -120,6 +120,7 @@ public final class Distributor extends Entity {
      * The method calculates the price of the current offer of the distributor
      * @return - the current price
      */
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     public int getCurrentPrice() {
         int profit = (int) Math.round(Math.floor(PROFIT_PERCENT * productionCost));
         if (contracts.size() == 0) {

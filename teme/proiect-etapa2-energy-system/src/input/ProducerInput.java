@@ -1,10 +1,10 @@
 package input;
 
-import entities.EnergyType;
+import producer.EnergyType;
 
 public final class ProducerInput {
     private int id;
-    private entities.EnergyType energyType;
+    private EnergyType energyType;
     private int maxDistributors;
     private double priceKW;
     private int energyPerDistributor;

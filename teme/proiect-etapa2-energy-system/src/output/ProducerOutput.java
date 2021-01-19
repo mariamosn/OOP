@@ -1,6 +1,6 @@
 package output;
 
-import entities.EnergyType;
+import producer.EnergyType;
 import producer.Producer;
 
 import java.util.List;
@@ -9,7 +9,7 @@ public final class ProducerOutput {
     private int id;
     private int maxDistributors;
     private double priceKW;
-    private entities.EnergyType energyType;
+    private EnergyType energyType;
     private int energyPerDistributor;
     private List<MonthlyStatOutput> monthlyStats;
 

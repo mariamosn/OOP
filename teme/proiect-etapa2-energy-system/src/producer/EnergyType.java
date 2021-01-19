@@ -1,4 +1,4 @@
-package entities;
+package producer;
 
 /**
  * Types of energy produced by EnergyProducers

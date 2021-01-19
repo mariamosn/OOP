@@ -1,6 +1,5 @@
 package producer;
 
-import entities.EnergyType;
 import entity.Entity;
 import input.ProducerInput;
 import output.MonthlyStatOutput;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Producer extends Entity {
-    private entities.EnergyType energyType;
+    private EnergyType energyType;
     private int maxDistributors;
     private double priceKW;
     private Energy energy;
@@ -58,13 +57,5 @@ public final class Producer extends Entity {
 
     public List<MonthlyStatOutput> getMonthlyStats() {
         return monthlyStats;
-    }
-
-    @Override
-    public String toString() {
-        return "Producer{"
-                + "energyType="
-                + energyType
-                + '}';
     }
 }

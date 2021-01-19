@@ -126,13 +126,10 @@ public final class DataBase {
      * @return - the consumer with the provided id or null if no such consumer exists
      */
     public Consumer getConsumer(final int id) {
-        for (Consumer consumer
-             : consumers) {
-            if (consumer.getId() == id) {
-                return consumer;
-            }
-        }
-        return null;
+        return consumers.stream()
+                .filter(cons -> id == cons.getId())
+                .findAny()
+                .orElse(null);
     }
 
     /**
@@ -141,13 +138,10 @@ public final class DataBase {
      * @return - the distributor with the provided id or null if no such distributor exists
      */
     public Distributor getDistributor(final int id) {
-        for (Distributor distributor
-            : distributors) {
-            if (distributor.getId() == id) {
-                return distributor;
-            }
-        }
-        return null;
+        return distributors.stream()
+                .filter(dist -> id == dist.getId())
+                .findAny()
+                .orElse(null);
     }
 
     /**
@@ -156,12 +150,9 @@ public final class DataBase {
      * @return - the producer with the provided id or null if no such producer exists
      */
     public Producer getProducer(final int id) {
-        for (Producer producer
-                : producers) {
-            if (producer.getId() == id) {
-                return producer;
-            }
-        }
-        return null;
+        return producers.stream()
+                .filter(prod -> id == prod.getId())
+                .findAny()
+                .orElse(null);
     }
 }
