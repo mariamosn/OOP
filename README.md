@@ -1,8 +1,6 @@
 # Homeworks
 
-This repository contains:
-
- * content of each homework with detailed explanations of the assignments and automated checkers
+This repository contains my implementation for each of the projects in the Object-oriented programming class.
 
 ## Repository folder structure
 
