@@ -8,13 +8,6 @@ The structure for a current homework is as follows:
 ```
 teme
 |
-|	--->	homework*X*-name  [1]
-|		|	--->	checker  [2]
-|		|	--->	media [3]
-|		|	--->	skel  [4]
-|		|		|	---> image-source [5]
-|		|	homework*X*-name  [6]
-|	--->	...
-|	--->	...
-``
-
+|	--->	tema1/Tema-POO-2020 : The first assignment.
+|	--->	proiect-etapa1 : The first stage of a larger project, Energy System.
+|	--->  proiect-etapa2-energy-system : The second stage of the project.
